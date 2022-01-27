@@ -1,11 +1,17 @@
 module.exports = (app) => {
 
+  const userController = require("../controllers/user/user.controller.js")
   /**
    * TEST API
    */
   app.get("/", (req, res) => {
     res.send("Welcome to the jungle of the SaaSlide API.")
   })
+
+  /**
+   * USER
+   */
+  app.post("/user", userController.createUser)
 
   /**
    * 404 NOT FOUND
