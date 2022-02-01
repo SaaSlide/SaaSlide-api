@@ -1,8 +1,12 @@
 module.exports = (app) => {
 
+  const multer = require('multer');
+  const upload = multer({ dest: 'uploads/' });
+
   const { verifyToken } = require("../controllers/token/verifyToken.controller.js")
   const authController = require("../controllers/auth/auth.controller.js")
   const userController = require("../controllers/user/user.controller.js")
+
   /**
    * TEST API
    */
@@ -26,6 +30,10 @@ module.exports = (app) => {
    * USER
    */
   app.post("/user", userController.createUser)
+
+  app.post('/file', upload.single('name'),  function(req, res) {
+    return res.status(201).json({ message: "fichier uploader" })
+  });
 
   /**
    * 404 NOT FOUND
