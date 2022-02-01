@@ -1,5 +1,7 @@
 module.exports = (app) => {
 
+  const { verifyToken } = require("../controllers/token/verifyToken.controller.js")
+  const authController = require("../controllers/auth/auth.controller.js")
   const userController = require("../controllers/user/user.controller.js")
   /**
    * TEST API
@@ -7,6 +9,18 @@ module.exports = (app) => {
   app.get("/", (req, res) => {
     res.send("Welcome to the jungle of the SaaSlide API.")
   })
+
+  /**
+   * API VERIFY REQUETE
+   */
+  /* checks if the API is well secured by a bearer Token */
+  app.use("/api/", verifyToken)
+
+  /**
+   * AUTH
+   */
+  app.post("/auth/register", authController.register)
+  app.post("/auth/login", authController.login)
 
   /**
    * USER
