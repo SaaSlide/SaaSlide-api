@@ -1,22 +1,11 @@
 module.exports = (app) => {
 
-  const multer = require('multer');
-
-  const storage = multer.diskStorage({
-    destination: (req, file, callback) => {
-      callback(null, 'uploads');
-    },
-    filename: (req, file, callback) => {
-      const name = file.originalname.split(' ').join('_');
-      callback(null, Date.now() + "-" + name);
-    }
-  });
-  
-  const upload = multer({ storage: storage })
 
   const { verifyToken } = require("../controllers/token/verifyToken.controller.js")
+  const multer  = require("../utils/multer.utils.js")
   const authController = require("../controllers/auth/auth.controller.js")
   const userController = require("../controllers/user/user.controller.js")
+  const fileController = require("../controllers/file/file.controller.js")
 
   /**
    * TEST API
@@ -42,9 +31,7 @@ module.exports = (app) => {
    */
   app.post("/user", userController.createUser)
 
-  app.post('/file', upload.single('name'),  function(req, res) {
-    return res.status(201).json({ message: "fichier upload" })
-  });
+  app.post('/file', multer,  fileController.addFile);
 
   /**
    * 404 NOT FOUND
