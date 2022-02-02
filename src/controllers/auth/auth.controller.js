@@ -38,7 +38,7 @@ const login = async (req, res) => {
   }
   try {
 
-    const data = await User.findOne({ mail: mail }).select('_id name mail password')
+    const data = await User.findOne({ mail: mail })
     if (data) {
       bcrypt.compare(password, data.password, async (err, response) => {
         if(response){
