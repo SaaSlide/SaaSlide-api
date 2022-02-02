@@ -53,7 +53,32 @@ const updatePicture = async (req, res) => {
 }
 
 const updatePassword = async (req, res) => {
-  return res.status(200).json({ message: "update password" })
+  let { password, confirmPassword } = req.body
+  const updates = {}
+
+  if (password?.length) {
+    updates.password = password
+  } else {
+    return res.status(400).json({ message: "enter password" })
+  }
+
+  if (confirmPassword?.length) {
+    updates.confirmPassword = confirmPassword
+  } else {
+    return res.status(400).json({ message: "enter confirmPassword" })
+  }
+
+  if(confirmPassword != password){
+    return res.status(400).json({ message: "not same password" })
+  }
+
+  try {
+    await User.findByIdAndUpdate(req.userId, updates)
+    return res.status(200).json({ message: "update password" })
+  } catch (e) {
+    console.log(e)
+    return res.status(500).json(e)
+  }
 }
 
 
