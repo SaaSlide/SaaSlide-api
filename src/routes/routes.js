@@ -29,8 +29,15 @@ module.exports = (app) => {
   /**
    * USER
    */
-  app.post("/user", userController.createUser)
+  app.get("/api/user", userController.getUser)
+  app.put("/api/user/profile", userController.updateProfile)
+  app.put("/api/user/profile/picture", userController.updatePicture)
+  app.put("/api/user/profile/password", userController.updatePassword)
 
+
+  /**
+   * FILE
+   */
   app.post('/file', multer,  fileController.addFile);
 
   /**
