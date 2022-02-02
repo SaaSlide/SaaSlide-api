@@ -19,4 +19,5 @@ mongoose.connect(
 )
 
 
+require("./role/role.model.js")
 require("./user/user.model.js")

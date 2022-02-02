@@ -6,6 +6,7 @@ module.exports = (app) => {
   const authController = require("../controllers/auth/auth.controller.js")
   const userController = require("../controllers/user/user.controller.js")
   const fileController = require("../controllers/file/file.controller.js")
+  const roleController = require("../controllers/role/role.controller.js")
 
   /**
    * TEST API
@@ -33,6 +34,11 @@ module.exports = (app) => {
   app.put("/api/user/profile", userController.updateProfile)
   app.put("/api/user/profile/picture", userController.updatePicture)
   app.put("/api/user/profile/password", userController.updatePassword)
+
+  /**
+   * FILE
+   */
+  app.get('/api/role', roleController.getRoleByUser);
 
 
   /**
