@@ -30,16 +30,6 @@ const register = async (req, res) => {
   })
 }
 
-const getId = async (req, res) => {
-  let { mail } = req.body
-  try {
-    const user = await User.findOne({ mail: mail })
-    return user
-  } catch (e) {
-    return res.status(500).json(e)
-  }
-}
-
 const login = async (req, res) => {
   let { mail, password } = req.body
 
@@ -48,7 +38,7 @@ const login = async (req, res) => {
   }
   try {
 
-    const data = await User.findOne({ mail: mail }).select('_id name mail password')
+    const data = await User.findOne({ mail: mail })
     if (data) {
       bcrypt.compare(password, data.password, async (err, response) => {
         if(response){

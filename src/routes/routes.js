@@ -6,6 +6,7 @@ module.exports = (app) => {
   const authController = require("../controllers/auth/auth.controller.js")
   const userController = require("../controllers/user/user.controller.js")
   const fileController = require("../controllers/file/file.controller.js")
+  const roleController = require("../controllers/role/role.controller.js")
 
   /**
    * TEST API
@@ -29,7 +30,10 @@ module.exports = (app) => {
   /**
    * USER
    */
-  app.post("/user", userController.createUser)
+  app.get("/api/user", userController.getUser)
+  app.put("/api/user/profile", userController.updateProfile)
+  app.put("/api/user/profile/picture", userController.updatePicture)
+  app.put("/api/user/profile/password", userController.updatePassword)
 
   /**
    * FILE POST
@@ -40,6 +44,11 @@ module.exports = (app) => {
    * FILE GET
    */
   app.get("/getfile", fileController.getFile)
+   
+  /** FILE
+   */
+  app.get('/api/role', roleController.getRoleByUser);
+
 
   /**
    * 404 NOT FOUND
