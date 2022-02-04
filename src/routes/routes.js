@@ -31,7 +31,15 @@ module.exports = (app) => {
    */
   app.post("/user", userController.createUser)
 
-  app.post('/file', multer,  fileController.addFile);
+  /**
+   * FILE POST
+   */
+  app.post('/file', multer,  fileController.addFile)
+
+  /**
+   * FILE GET
+   */
+  app.get("/getfile", fileController.getFile)
 
   /**
    * 404 NOT FOUND
