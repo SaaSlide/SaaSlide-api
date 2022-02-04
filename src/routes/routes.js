@@ -43,7 +43,7 @@ module.exports = (app) => {
   /**
    * FILE GET
    */
-  app.get("/getfile", fileController.getFile)
+  app.get("/getfiles", fileController.getAllFiles)
    
   /** FILE
    */

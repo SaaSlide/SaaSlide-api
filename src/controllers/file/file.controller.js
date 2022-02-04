@@ -36,42 +36,35 @@ const addFile = async (req, res) => {
 
 }
 
-const getFile = async (req, res) => {
+const getAllFiles = async (req, res) => {
   AWS.config.update({
     accessKeyId: process.env.AWSAccessKeyId,
     secretAccessKey: process.env.AWSSecretKey
   });
 
-  var fileName = "test/1643744751694_1643744751678-test2.png"
-
   var s3 = new AWS.S3();
 
-  var params = {
+  const response = await s3.listObjectsV2({
     Bucket: process.env.bucketName,
-    Key: fileName,
-  };
+  }).promise();
 
-  var writableStream = fs.createWriteStream("../../../uploads")
+  let data = []
 
-  s3.getObject(params, function (err, data) {
-    if (err) {
-      console.log(err, err.stack);
-      return res.status(500).json({ message: "error download" })
+  for (const content of response.Contents){
+    const url = "https://saaslide-test-charles.s3.eu-west-3.amazonaws.com/"
+    const key = content.Key
+    let completeUrl = {
+      url: url + key
     }
+    data.push(completeUrl)
+  }
 
-    else {
-      // var blob = new Blob( [ data.Body.buffer ], { type: "application/octet-stream" } )
-      // var urlCreator = window.URL || window.webkitURL;
-      // var imageUrl = urlCreator.createObjectURL( blob );
-      // var img = document.querySelector( "#photo" );
-      // img.src = imageUrl;
-      // console.log(imageUrl);
-      
-      return res.status(201).json({ message: "success download" })
-    }
-  });
-  
+  try {
+    return res.status(200).json(data)
+  } catch (e) {
+    return res.status(400).json("Oups ! error T_T")
+  }
 
 }
 
-module.exports = { addFile, getFile }
+module.exports = { addFile, getAllFiles }
