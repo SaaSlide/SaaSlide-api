@@ -3,6 +3,7 @@ const User = mongoose.model("user")
 
 const getUser = async (req, res) => {
 
+
   try {
     const data = await User.findById(req.userId)
     return res.status(200).json(data)
