@@ -36,16 +36,15 @@ module.exports = (app) => {
   app.put("/api/user/profile/password", userController.updatePassword)
 
   /**
-   * FILE POST
+   * FILE
    */
-  app.post('/file', multer,  fileController.addFile)
+  app.post('/api/file', multer,  fileController.addFile)
+  app.get('/api/file', fileController.getAllFile)
+  app.get('/api/file/:diapoId', fileController.getFileByDiapoId)
 
-  /**
-   * FILE GET
-   */
-  app.get("/getfiles", fileController.getAllFiles)
+
    
-  /** FILE
+  /** ROLE
    */
   app.get('/api/role', roleController.getRoleByUser);
 
