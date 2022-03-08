@@ -1,13 +1,15 @@
 const mongoose = require("mongoose")
 const Diapo = mongoose.model("diapo")
+const path = require('path');
 
 const addFile = async (req, res) => {
 
   if(req.file) {
+    const filePath = path.join(__dirname, '..', '..', '..')
     const newDiapo = new Diapo({
       originalName: req.file.originalname,
       fileName: req.file.filename,
-      path: req.file.path,
+      path: 'file:///' + filePath + '/' + req.file.path,
       users: req.userId
     })
     await newDiapo.save();
