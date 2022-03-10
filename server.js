@@ -12,7 +12,7 @@ const winston = require("./src/config/winston.js")
 require("dotenv").config()
 
 const app = express()
-
+app.use('/public', express.static(__dirname + '/public'));
 // enable cors
 app.use(cors())
 app.options("*", cors())

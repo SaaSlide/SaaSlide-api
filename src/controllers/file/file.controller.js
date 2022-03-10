@@ -3,13 +3,12 @@ const Diapo = mongoose.model("diapo")
 const path = require('path');
 
 const addFile = async (req, res) => {
-
+  const hostname = req.headers.host;
   if(req.file) {
-    const filePath = path.join(__dirname, '..', '..', '..')
     const newDiapo = new Diapo({
       originalName: req.file.originalname,
       fileName: req.file.filename,
-      path: 'file:///' + filePath + '/' + req.file.path,
+      path: 'http://' + hostname + '/' + req.file.path,
       users: req.userId
     })
     await newDiapo.save();
@@ -21,7 +20,7 @@ const addFile = async (req, res) => {
 
 const getAllFile = async (req, res) => {
   try {
-    const data = await Diapo.find().where('users').in(req.userId);
+    const data = await Diapo.find();
     return res.status(200).json(data)
   } catch (e) {
     console.log(e)
@@ -32,7 +31,7 @@ const getAllFile = async (req, res) => {
 const getFileByDiapoId = async (req, res) => {
 
   try {
-    const data = await Diapo.findOne({_id: req.params.diapoId}).where('users').in(req.userId);
+    const data = await Diapo.findOne({_id: req.params.diapoId});
     if(data === null) {
       return res.status(400).json("You don't have any diapo with this id")
     }

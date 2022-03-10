@@ -39,8 +39,8 @@ module.exports = (app) => {
    * FILE
    */
   app.post('/api/file', multer,  fileController.addFile)
-  app.get('/api/file', fileController.getAllFile)
-  app.get('/api/file/:diapoId', fileController.getFileByDiapoId)
+  app.get('/file', fileController.getAllFile)
+  app.get('/file/:diapoId', fileController.getFileByDiapoId)
 
 
    
