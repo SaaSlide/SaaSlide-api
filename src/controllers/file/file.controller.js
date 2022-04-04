@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const Diapo = mongoose.model("diapo")
 const path = require('path');
+const fs = require('fs');
 
 const addFile = async (req, res) => {
   const hostname = req.headers.host;
@@ -42,4 +43,19 @@ const getFileByDiapoId = async (req, res) => {
   }
 }
 
-module.exports = { addFile, getAllFile, getFileByDiapoId }
+const getFileHello = async (req, res) => {
+  var file = fs.createReadStream("./public/uploads/1646917540900.pdf");
+  var stat = fs.statSync("./public/uploads/1646917540900.pdf");
+  res.setHeader("Content-length", stat.size);
+  res.setHeader("Content-type", "application/pdf");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Content-Disposition",'attachment; filename=file.pdf');
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self'; frame-src 'self'"
+  ); 
+  return file.pipe(res);
+};
+
+
+module.exports = { addFile, getAllFile, getFileByDiapoId, getFileHello }
