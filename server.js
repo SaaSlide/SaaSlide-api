@@ -16,12 +16,11 @@ app.use('/public', express.static(__dirname + '/public'));
 // enable cors
 app.use(cors())
 app.options("*", cors())
-
 // parse json request body
 app.use(express.json())
 
-// set security HTTP headers
-app.use(helmet())
+
+
 
 // Display logs of api
 app.use(morgan("combined", { stream: winston.stream }))

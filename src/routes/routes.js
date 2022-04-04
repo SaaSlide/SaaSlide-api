@@ -43,6 +43,7 @@ module.exports = (app) => {
   app.get('/file/:diapoId', fileController.getFileByDiapoId)
 
 
+
    
   /** ROLE
    */
