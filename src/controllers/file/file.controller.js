@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const Diapo = mongoose.model("diapo");
+const InfoDiapo = mongoose.model("infodiapo");
 const { fromPath } = require("pdf2pic");
 const pdf = require("pdf-page-counter");
 const fs = require("fs");
-const User = mongoose.model("user");
 
 const addFile = async (req, res) => {
   const hostname = req.headers.host;
@@ -11,7 +11,7 @@ const addFile = async (req, res) => {
     const { filename } = req.file;
     const options = {
       density: 100,
-      saveFilename: "file",
+      saveFilename: Date.now(),
       savePath: "./public/pdfToPng",
       format: "png",
       width: 1920,
@@ -32,12 +32,25 @@ const addFile = async (req, res) => {
         }
       })
       .then(async function () {
+        let idsOfInfoDiapo = [];
+        for (const element of arrayOfPng) {
+          const { name, size, fileSize, path, page } = element;
+          const newInfoDiapo = new InfoDiapo({
+            name,
+            size,
+            fileSize,
+            path,
+            page,
+          });
+          idsOfInfoDiapo.push(newInfoDiapo._id);
+          await newInfoDiapo.save();
+        }
         const newDiapo = new Diapo({
-          infoDiapo: arrayOfPng,
+          infoDiapo: idsOfInfoDiapo,
           users: req.userId,
         });
         await newDiapo.save();
-        return res.status(200).json({ message: "Success import" });
+        return res.status(200).json({ message: "Success" });
       });
   } else {
     return res.status(400).json({ message: "Oups ! error T_T" });
@@ -45,9 +58,8 @@ const addFile = async (req, res) => {
 };
 
 const getAllFile = async (req, res) => {
-
   try {
-    const data = await Diapo.find({ users: req.userId }).select("infoDiapo");
+    const data = await Diapo.find({ users: req.userId }).populate("infoDiapo");
     console.log(data);
     return res.status(200).json(data);
   } catch (e) {
@@ -57,7 +69,7 @@ const getAllFile = async (req, res) => {
 
 const getFileByDiapoId = async (req, res) => {
   try {
-    const data = await Diapo.findOne({ _id: req.params.diapoId });
+    const data = await Diapo.findOne({ _id: req.params.diapoId }).populate("infoDiapo");
     if (data === null) {
       return res.status(400).json("You don't have any diapo with this id");
     }

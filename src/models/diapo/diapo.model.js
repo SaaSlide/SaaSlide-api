@@ -1,18 +1,24 @@
-const mongoose = require("mongoose")
-const Schema = mongoose.Schema
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
-let DiapoSchema = new Schema({
-  infoDiapo: [],
-  users: [
-    {
+let DiapoSchema = new Schema(
+  {
+    infoDiapo: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'user'
-    }
-  ]
-},
-{
-  timestamps: true
-},
-)
+        ref: "infodiapo",
+      },
+    ],
+    users: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "user",
+      },
+    ],
+  },
+  {
+    timestamps: true,
+  }
+);
 
-mongoose.model("diapo", DiapoSchema)
+mongoose.model("diapo", DiapoSchema);

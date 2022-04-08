@@ -22,3 +22,4 @@ mongoose.connect(
 require("./role/role.model.js")
 require("./user/user.model.js")
 require("./diapo/diapo.model.js")
+require("./diapo/infoDiapo.model.js")
