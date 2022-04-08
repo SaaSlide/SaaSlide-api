@@ -105,4 +105,5 @@ dist
 
 
 front/
-uploads/
+uploads/*.*
+pdfToPng/*.*

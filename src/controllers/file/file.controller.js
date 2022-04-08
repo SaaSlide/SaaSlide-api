@@ -6,7 +6,6 @@ const pdf = require("pdf-page-counter");
 const fs = require("fs");
 
 const addFile = async (req, res) => {
-  const hostname = req.headers.host;
   if (req.file) {
     const { filename } = req.file;
     const options = {
@@ -53,7 +52,7 @@ const addFile = async (req, res) => {
         return res.status(200).json({ message: "Success" });
       });
   } else {
-    return res.status(400).json({ message: "Oups ! error T_T" });
+    return res.status(400).json({ message: "You don't have any file" });
   }
 };
 
