@@ -7,6 +7,7 @@ module.exports = (app) => {
   const userController = require("../controllers/user/user.controller.js")
   const fileController = require("../controllers/file/file.controller.js")
   const roleController = require("../controllers/role/role.controller.js")
+  const surveyController = require("../controllers/survey/survey.controller.js")
 
   /**
    * TEST API
@@ -40,11 +41,14 @@ module.exports = (app) => {
    */
   app.post('/api/file', multer, fileController.addFile)
   app.get('/api/file', fileController.getAllFile)
-  app.get('/file/:diapoId', fileController.getFileByDiapoId)
+  app.get('/api/file/:diapoId', fileController.getFileByDiapoId)
 
 
+  /**
+   * SURVEY
+   */
+  app.post('/api/survey/:pageId', surveyController.createSurvey);
 
-   
   /** ROLE
    */
   app.get('/api/role', roleController.getRoleByUser);
