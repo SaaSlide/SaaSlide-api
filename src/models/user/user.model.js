@@ -7,6 +7,12 @@ let UserSchema = new Schema({
   password: { type: String },
   picture: { type: String, required: false},
   isAdmin: { type: Boolean, default: false},
+  diaposUser: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "diapo",
+    },
+  ],
   roleUser: [
     {
       type: Schema.Types.ObjectId,
