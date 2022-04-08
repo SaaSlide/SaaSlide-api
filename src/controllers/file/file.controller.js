@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
 const Diapo = mongoose.model("diapo");
-const path = require("path");
-const mime = require("mime-types");
+const { fromPath } = require("pdf2pic");
+const pdf = require("pdf-page-counter");
 const fs = require("fs");
-const { restart } = require("nodemon");
 
 const addFile = async (req, res) => {
   const hostname = req.headers.host;
@@ -21,6 +20,34 @@ const addFile = async (req, res) => {
   }
 };
 
+const pdfToPng = async (req, res) => {
+  const { filename } = req.query;
+  const options = {
+    density: 100,
+    saveFilename: "file",
+    savePath: "./public/pdfToPng",
+    format: "png",
+    width: 1920,
+    height: 1080,
+  };
+  let arrayOfPng = [];
+  const storeAsImage = fromPath(`./public/uploads/${filename}`, options);
+  let dataBuffer = fs.readFileSync(`./public/uploads/${filename}`);
+  pdf(dataBuffer)
+    .then(async function (data) {
+      for (
+        let pageToConvertAsImage = 1;
+        pageToConvertAsImage <= data.numpages;
+        pageToConvertAsImage++
+      ) {
+        const data = await storeAsImage(pageToConvertAsImage);
+        arrayOfPng.push(data);
+      }
+    })
+    .then(() => {
+      res.send({ filename: arrayOfPng });
+    });
+};
 const getAllFile = async (req, res) => {
   try {
     const data = await Diapo.find();
@@ -43,4 +70,4 @@ const getFileByDiapoId = async (req, res) => {
   }
 };
 
-module.exports = { addFile, getAllFile, getFileByDiapoId };
+module.exports = { addFile, pdfToPng, getAllFile, getFileByDiapoId };
