@@ -12,20 +12,35 @@ const createSurvey = async (req, res) => {
 
   try {
     await newSurvey.save();
-    const data = await InfoDiapo.findByIdAndUpdate(
+    await InfoDiapo.findByIdAndUpdate(
       pageId,
       { $push: { surveys: newSurvey.id } },
       { new: true }
     );
     return res.status(200).json({ message: "success" });
   } catch (e) {
-    console.log(e);
     return res.status(500).json(e);
   }
 };
 
 const getSurvey = async (req, res) => {
-    console.log('getSurvey');
-}
+  const { pageId } = req.params;
+
+  try {
+    const data = await InfoDiapo.findById(pageId)
+      .select("surveys")
+      .populate([
+        {
+          path: "surveys",
+          model: "survey",
+          select: "_id name survey",
+        },
+      ]);
+    return res.status(200).json(data);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
+  }
+};
 
 module.exports = { createSurvey, getSurvey };

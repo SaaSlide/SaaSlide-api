@@ -48,6 +48,7 @@ module.exports = (app) => {
    * SURVEY
    */
   app.post('/api/survey/:pageId', surveyController.createSurvey);
+  app.get('/api/survey/:pageId', surveyController.getSurvey);
 
   /** ROLE
    */
