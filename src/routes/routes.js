@@ -1,59 +1,65 @@
 module.exports = (app) => {
-
-
-  const { verifyToken } = require("../controllers/token/verifyToken.controller.js")
-  const multer  = require("../utils/multer.utils.js")
-  const authController = require("../controllers/auth/auth.controller.js")
-  const userController = require("../controllers/user/user.controller.js")
-  const fileController = require("../controllers/file/file.controller.js")
-  const roleController = require("../controllers/role/role.controller.js")
-  const surveyController = require("../controllers/survey/survey.controller.js")
+  const {
+    verifyToken,
+  } = require("../controllers/token/verifyToken.controller.js");
+  const multer = require("../utils/multer.utils.js");
+  const authController = require("../controllers/auth/auth.controller.js");
+  const userController = require("../controllers/user/user.controller.js");
+  const fileController = require("../controllers/file/file.controller.js");
+  const roleController = require("../controllers/role/role.controller.js");
+  const surveyController = require("../controllers/survey/survey.controller.js");
+  const quizzController = require("../controllers/quizz/quizz.controller.js");
 
   /**
    * TEST API
    */
   app.get("/", (req, res) => {
-    res.send("Welcome to the jungle of the SaaSlide API.")
-  })
+    res.send("Welcome to the jungle of the SaaSlide API.");
+  });
 
   /**
    * API VERIFY REQUETE
    */
   /* checks if the API is well secured by a bearer Token */
-  app.use("/api/", verifyToken)
+  app.use("/api/", verifyToken);
 
   /**
    * AUTH
    */
-  app.post("/auth/register", authController.register)
-  app.post("/auth/login", authController.login)
+  app.post("/auth/register", authController.register);
+  app.post("/auth/login", authController.login);
 
   /**
    * USER
    */
-  app.get("/api/user", userController.getUser)
-  app.put("/api/user/profile", userController.updateProfile)
-  app.put("/api/user/profile/picture", userController.updatePicture)
-  app.put("/api/user/profile/password", userController.updatePassword)
+  app.get("/api/user", userController.getUser);
+  app.put("/api/user/profile", userController.updateProfile);
+  app.put("/api/user/profile/picture", userController.updatePicture);
+  app.put("/api/user/profile/password", userController.updatePassword);
 
   /**
    * FILE
    */
-  app.post('/api/file', multer, fileController.addFile)
-  app.get('/api/file', fileController.getAllFile)
-  app.get('/api/file/:diapoId', fileController.getFileByDiapoId)
-
+  app.post("/api/file", multer, fileController.addFile);
+  app.get("/api/file", fileController.getAllFile);
+  app.get("/api/file/:diapoId", fileController.getFileByDiapoId);
+  app.put('/api/file/params/:diapoId', fileController.updateParamsDiapo);
 
   /**
    * SURVEY
    */
-  app.post('/api/survey/:pageId', surveyController.createSurvey);
-  app.get('/api/survey/:pageId', surveyController.getSurvey);
+  app.post("/api/survey/:pageId", surveyController.createSurvey);
+  app.get("/api/survey/:pageId", surveyController.getSurvey);
+
+  /**
+   * QUIZZ
+   */
+  app.post("/api/quizz/:pageId", quizzController.createQuizz);
+  app.get("/api/quizz/:pageId", quizzController.getQuizz);
 
   /** ROLE
    */
-  app.get('/api/role', roleController.getRoleByUser);
-
+  app.get("/api/role", roleController.getRoleByUser);
 
   /**
    * 404 NOT FOUND
@@ -65,6 +71,6 @@ module.exports = (app) => {
       URL_ERROR: req.originalUrl,
       STATUS_ERROR: "404",
       ERROR: "NOT FOUND",
-    })
-  })
-}
+    });
+  });
+};

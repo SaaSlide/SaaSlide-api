@@ -9,6 +9,16 @@ let DiapoSchema = new Schema(
         ref: "infodiapo",
       },
     ],
+    sendAnswer: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
+    sendEmoji: {
+      type: Boolean,
+      required: false,
+      default: false,
+    },
     users: [
       {
         type: Schema.Types.ObjectId,

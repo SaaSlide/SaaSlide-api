@@ -58,7 +58,13 @@ const addFile = async (req, res) => {
 
 const getAllFile = async (req, res) => {
   try {
-    const data = await Diapo.find({ users: req.userId }).populate("infoDiapo");
+    const data = await Diapo.find({ users: req.userId })
+      .select("infoDiapo")
+      .populate({
+        path: "infoDiapo",
+        model: "infodiapo",
+        select: "_id path",
+      });
     console.log(data);
     return res.status(200).json(data);
   } catch (e) {
@@ -68,7 +74,13 @@ const getAllFile = async (req, res) => {
 
 const getFileByDiapoId = async (req, res) => {
   try {
-    const data = await Diapo.findOne({ _id: req.params.diapoId }).populate("infoDiapo");
+    const data = await Diapo.findOne({ _id: req.params.diapoId })
+      .select("infoDiapo")
+      .populate({
+        path: "infoDiapo",
+        model: "infodiapo",
+        select: "_id path page",
+      });
     if (data === null) {
       return res.status(400).json("You don't have any diapo with this id");
     }
@@ -79,4 +91,23 @@ const getFileByDiapoId = async (req, res) => {
   }
 };
 
-module.exports = { addFile, getAllFile, getFileByDiapoId };
+const updateParamsDiapo = async (req, res) => {
+  const { emoji, answer } = req.query;
+  const { diapoId } = req.params;
+
+  try {
+    await Diapo.findByIdAndUpdate(
+      diapoId,
+      {
+        $set: { sendEmoji: emoji, sendAnswer: answer },
+      },
+      { new: true }
+    );
+    return res.status(200).json({ message: "success" });
+  } catch (e) {
+    console.log(e);
+    return res.status(500).json(e);
+  }
+};
+
+module.exports = { addFile, getAllFile, getFileByDiapoId, updateParamsDiapo };
