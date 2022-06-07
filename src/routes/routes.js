@@ -37,39 +37,34 @@ module.exports = (app) => {
   app.delete("/api/user", userController.deleteCurrentUser);
 
   /**
-   * FILE
+   * DIAPO
    */
-  app.post("/api/file", multer, fileController.addFile);
-  app.get("/api/file", fileController.getAllFile);
-  app.get("/api/file/:diapoId", fileController.getFileByDiapoId);
-  app.put("/api/file/params/:diapoId", fileController.switchParamsDiapo);
-  app.delete("/api/file/:diapoId", fileController.deleteFile);
+  app.post("/api/diapo", multer, fileController.addFile);
+  app.get("/api/diapo", fileController.getAllFile);
+  app.get("/api/diapo/:diapoId", fileController.getFileByDiapoId);
+  app.put("/api/diapo/params/:diapoId", fileController.switchParamsDiapo);
+  app.delete("/api/diapo/:diapoId", fileController.deleteFile);
 
   /**
    * SURVEY
    */
   app.get("/api/survey/:pageId", surveyController.getSurvey);
   app.post("/api/survey/:pageId", surveyController.createSurvey);
-  app.put("/api/survey/:surveyId", surveyController.updateSurvey)
-  app.delete("/api/survey/:surveyId", surveyController.deleteSurvey)
+  app.put("/api/survey/:surveyId", surveyController.updateSurvey);
+  app.delete("/api/survey/:surveyId", surveyController.deleteSurvey);
 
   /**
    * QUIZZ
    */
   app.get("/api/quizz/:pageId", quizzController.getQuizz);
   app.post("/api/quizz/:pageId", quizzController.createQuizz);
-  app.put("/api/quizz/:quizzId", quizzController.updateQuizz)
-  app.delete("/api/quizz/:quizzId", quizzController.deleteQuizz)
-
-  /** ROLE
-   */
-  app.get("/api/role", roleController.getRoleByUser);
+  app.put("/api/quizz/:quizzId", quizzController.updateQuizz);
+  app.delete("/api/quizz/:quizzId", quizzController.deleteQuizz);
 
   /**
    * 404 NOT FOUND
    */
 
-  /* Error case of a false route */
   app.use((req, res) => {
     res.status(404).json({
       URL_ERROR: req.originalUrl,
