@@ -37,9 +37,6 @@ const updateProfileCurrentUser = async (req, res) => {
   }
 };
 
-const logout = async (req, res) => {
-  console.log('hello')
-}
 
 const deleteCurrentUser = async (req, res) => {
   try {
@@ -50,4 +47,4 @@ const deleteCurrentUser = async (req, res) => {
   }
 }
 
-module.exports = { getCurrentUser, updateProfileCurrentUser, logout, deleteCurrentUser };
+module.exports = { getCurrentUser, updateProfileCurrentUser, deleteCurrentUser };

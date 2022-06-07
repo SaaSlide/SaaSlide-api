@@ -34,8 +34,7 @@ module.exports = (app) => {
    */
   app.get("/api/user", userController.getCurrentUser);
   app.put("/api/user/profile", userController.updateProfileCurrentUser);
-  app.post('/api/user/logout', userController.logout);
-  app.delete("/api/user", userController.deleteCurrentUser)
+  app.delete("/api/user", userController.deleteCurrentUser);
 
   /**
    * FILE
@@ -43,20 +42,22 @@ module.exports = (app) => {
   app.post("/api/file", multer, fileController.addFile);
   app.get("/api/file", fileController.getAllFile);
   app.get("/api/file/:diapoId", fileController.getFileByDiapoId);
-  app.put('/api/file/params/:diapoId', fileController.switchParamsDiapo);
-  app.delete('/api/file/:diapoId', fileController.deleteFile);
+  app.put("/api/file/params/:diapoId", fileController.switchParamsDiapo);
+  app.delete("/api/file/:diapoId", fileController.deleteFile);
 
   /**
    * SURVEY
    */
-  app.post("/api/survey/:pageId", surveyController.createSurvey);
   app.get("/api/survey/:pageId", surveyController.getSurvey);
+  app.post("/api/survey/:pageId", surveyController.createSurvey);
+  app.put("/api/survey/:surveyId", surveyController.updateSurvey)
+  app.delete("/api/survey/:surveyId", surveyController.deleteSurvey)
 
   /**
    * QUIZZ
    */
-  app.post("/api/quizz/:pageId", quizzController.createQuizz);
   app.get("/api/quizz/:pageId", quizzController.getQuizz);
+  app.post("/api/quizz/:pageId", quizzController.createQuizz);
 
   /** ROLE
    */

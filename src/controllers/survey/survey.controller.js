@@ -43,4 +43,37 @@ const getSurvey = async (req, res) => {
   }
 };
 
-module.exports = { createSurvey, getSurvey };
+const updateSurvey = async (req, res) => {
+  const { surveyId } = req.params;
+
+  let { name, survey } = req.body;
+  const updates = {};
+
+  if (name?.length) {
+    updates.name = name;
+  }
+  if (survey?.length) {
+    updates.survey = survey;
+  }
+
+  try {
+    await Survey.findByIdAndUpdate(surveyId, updates);
+    return res.status(200).json({ message: "update profile" });
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+}
+
+const deleteSurvey = async (req, res) => {
+  const { surveyId } = req.params;
+
+  try {
+    await Survey.remove({ _id: surveyId });
+    return res.status(200).json({ message: "survey delete" });
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+
+}
+
+module.exports = { createSurvey, getSurvey,updateSurvey, deleteSurvey };

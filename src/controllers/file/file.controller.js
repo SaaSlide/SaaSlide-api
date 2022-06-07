@@ -73,6 +73,7 @@ const getAllFile = async (req, res) => {
 };
 
 const getFileByDiapoId = async (req, res) => {
+
   try {
     const data = await Diapo.findOne({ _id: req.params.diapoId })
       .select("infoDiapo sendAnswer sendEmoji")
@@ -103,7 +104,6 @@ const getFileByDiapoId = async (req, res) => {
 };
 
 const switchParamsDiapo = async (req, res) => {
-
   const { emoji, answer } = req.query;
   const { diapoId } = req.params;
 
@@ -123,11 +123,17 @@ const switchParamsDiapo = async (req, res) => {
 
 const deleteFile = async (req, res) => {
   try {
-    await Diapo.remove({ _id: req.params.diapoId })
-    return res.status(200).json({ message: "diapo delete" })
+    await Diapo.remove({ _id: req.params.diapoId });
+    return res.status(200).json({ message: "diapo delete" });
   } catch (e) {
     return res.status(500).json(e);
   }
-}
+};
 
-module.exports = { addFile, getAllFile, getFileByDiapoId, switchParamsDiapo, deleteFile };
+module.exports = {
+  addFile,
+  getAllFile,
+  getFileByDiapoId,
+  switchParamsDiapo,
+  deleteFile,
+};
