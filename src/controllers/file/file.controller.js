@@ -123,8 +123,7 @@ const switchParamsDiapo = async (req, res) => {
 
 const deleteFile = async (req, res) => {
   try {
-    const data = await Diapo.remove({ _id: req.params.diapoId })
-    console.log('hola', data)
+    await Diapo.remove({ _id: req.params.diapoId })
     return res.status(200).json({ message: "diapo delete" })
   } catch (e) {
     return res.status(500).json(e);
