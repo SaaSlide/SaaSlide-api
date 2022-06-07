@@ -6,7 +6,6 @@ module.exports = (app) => {
   const authController = require("../controllers/auth/auth.controller.js");
   const userController = require("../controllers/user/user.controller.js");
   const fileController = require("../controllers/file/file.controller.js");
-  const roleController = require("../controllers/role/role.controller.js");
   const surveyController = require("../controllers/survey/survey.controller.js");
   const quizzController = require("../controllers/quizz/quizz.controller.js");
 

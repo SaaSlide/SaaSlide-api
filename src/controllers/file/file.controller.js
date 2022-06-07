@@ -90,7 +90,7 @@ const getFileByDiapoId = async (req, res) => {
           {
             path: "quizzs",
             model: "quizz",
-            select: "_id name quizz",
+            select: "_id question possibilities",
           },
         ],
       });

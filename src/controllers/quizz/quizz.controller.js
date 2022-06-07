@@ -3,13 +3,25 @@ const Quizz = mongoose.model("quizz");
 const InfoDiapo = mongoose.model("infodiapo");
 
 const createQuizz = async (req, res) => {
-  const { name, quizz } = req.body;
+  const { question, possibilties } = req.body;
   const { pageId } = req.params;
 
+  const tableOfQuizz = [];
+
+  for (const element of possibilties) {
+    let object = {};
+    const { choice, answer } = element;
+    object.choice = choice;
+    object.answer = answer;
+    tableOfQuizz.push(object);
+  }
+
+
   const newQuizz = new Quizz({
-    name,
-    quizz,
+    question,
+    possibilities: tableOfQuizz,
   });
+
 
   try {
     await newQuizz.save();
@@ -34,7 +46,7 @@ const getQuizz = async (req, res) => {
         {
           path: "quizzs",
           model: "quizz",
-          select: "_id name quizz",
+          select: "_id question possibilities",
         },
       ]);
     return res.status(200).json(data);
@@ -62,7 +74,7 @@ const updateQuizz = async (req, res) => {
   } catch (e) {
     return res.status(500).json(e);
   }
-}
+};
 
 const deleteQuizz = async (req, res) => {
   const { quizzId } = req.params;
@@ -73,7 +85,6 @@ const deleteQuizz = async (req, res) => {
   } catch (e) {
     return res.status(500).json(e);
   }
-
-}
+};
 
 module.exports = { createQuizz, getQuizz, updateQuizz, deleteQuizz };
