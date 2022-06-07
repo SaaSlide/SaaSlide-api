@@ -58,6 +58,8 @@ module.exports = (app) => {
    */
   app.get("/api/quizz/:pageId", quizzController.getQuizz);
   app.post("/api/quizz/:pageId", quizzController.createQuizz);
+  app.put("/api/quizz/:quizzId", quizzController.updateQuizz)
+  app.delete("/api/quizz/:quizzId", quizzController.deleteQuizz)
 
   /** ROLE
    */

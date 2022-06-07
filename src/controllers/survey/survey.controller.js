@@ -58,7 +58,7 @@ const updateSurvey = async (req, res) => {
 
   try {
     await Survey.findByIdAndUpdate(surveyId, updates);
-    return res.status(200).json({ message: "update profile" });
+    return res.status(200).json({ message: "update survey" });
   } catch (e) {
     return res.status(500).json(e);
   }

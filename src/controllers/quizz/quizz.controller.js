@@ -43,4 +43,37 @@ const getQuizz = async (req, res) => {
   }
 };
 
-module.exports = { createQuizz, getQuizz };
+const updateQuizz = async (req, res) => {
+  const { quizzId } = req.params;
+
+  let { name, quizz } = req.body;
+  const updates = {};
+
+  if (name?.length) {
+    updates.name = name;
+  }
+  if (quizz?.length) {
+    updates.quizz = quizz;
+  }
+
+  try {
+    await Quizz.findByIdAndUpdate(quizzId, updates);
+    return res.status(200).json({ message: "update quizz" });
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+}
+
+const deleteQuizz = async (req, res) => {
+  const { quizzId } = req.params;
+
+  try {
+    await Quizz.remove({ _id: quizzId });
+    return res.status(200).json({ message: "quizz delete" });
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+
+}
+
+module.exports = { createQuizz, getQuizz, updateQuizz, deleteQuizz };
