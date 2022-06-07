@@ -4,7 +4,6 @@ const process = require("process")
 const JWT_SIGN_SECRET = process.env.JWT_SIGN_SECRET
 
 const generateTokenForUser = (userData) => {
-  console.log('hi', userData)
   return jwt.sign(
     {
       id: userData._id,

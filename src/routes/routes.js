@@ -32,10 +32,10 @@ module.exports = (app) => {
   /**
    * USER
    */
-  app.get("/api/user", userController.getUser);
-  app.put("/api/user/profile", userController.updateProfile);
-  app.put("/api/user/profile/picture", userController.updatePicture);
-  app.put("/api/user/profile/password", userController.updatePassword);
+  app.get("/api/user", userController.getCurrentUser);
+  app.put("/api/user/profile", userController.updateProfileCurrentUser);
+  app.post('/api/user/logout', userController.logout);
+  app.delete("/api/user", userController.deleteCurrentUser)
 
   /**
    * FILE
@@ -43,7 +43,8 @@ module.exports = (app) => {
   app.post("/api/file", multer, fileController.addFile);
   app.get("/api/file", fileController.getAllFile);
   app.get("/api/file/:diapoId", fileController.getFileByDiapoId);
-  app.put('/api/file/params/:diapoId', fileController.updateParamsDiapo);
+  app.put('/api/file/params/:diapoId', fileController.switchParamsDiapo);
+  app.delete('/api/file/:diapoId', fileController.deleteFile);
 
   /**
    * SURVEY

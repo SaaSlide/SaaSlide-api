@@ -59,11 +59,11 @@ const addFile = async (req, res) => {
 const getAllFile = async (req, res) => {
   try {
     const data = await Diapo.find({ users: req.userId })
-      .select("infoDiapo")
+      .select("infoDiapo sendAnswer sendEmoji")
       .populate({
         path: "infoDiapo",
         model: "infodiapo",
-        select: "_id path",
+        select: "_id path page",
       });
     console.log(data);
     return res.status(200).json(data);
@@ -75,23 +75,35 @@ const getAllFile = async (req, res) => {
 const getFileByDiapoId = async (req, res) => {
   try {
     const data = await Diapo.findOne({ _id: req.params.diapoId })
-      .select("infoDiapo")
+      .select("infoDiapo sendAnswer sendEmoji")
       .populate({
         path: "infoDiapo",
         model: "infodiapo",
-        select: "_id path page",
+        select: "_id path page surveys quizzs",
+        populate: [
+          {
+            path: "surveys",
+            model: "survey",
+            select: "_id name survey",
+          },
+          {
+            path: "quizzs",
+            model: "quizz",
+            select: "_id name quizz",
+          },
+        ],
       });
     if (data === null) {
       return res.status(400).json("You don't have any diapo with this id");
     }
     return res.status(200).json(data);
   } catch (e) {
-    console.log(e);
     return res.status(500).json(e);
   }
 };
 
-const updateParamsDiapo = async (req, res) => {
+const switchParamsDiapo = async (req, res) => {
+
   const { emoji, answer } = req.query;
   const { diapoId } = req.params;
 
@@ -103,11 +115,20 @@ const updateParamsDiapo = async (req, res) => {
       },
       { new: true }
     );
-    return res.status(200).json({ message: "success" });
+    return res.status(200).json({ message: "params are successfully updated" });
   } catch (e) {
-    console.log(e);
     return res.status(500).json(e);
   }
 };
 
-module.exports = { addFile, getAllFile, getFileByDiapoId, updateParamsDiapo };
+const deleteFile = async (req, res) => {
+  try {
+    const data = await Diapo.remove({ _id: req.params.diapoId })
+    console.log('hola', data)
+    return res.status(200).json({ message: "diapo delete" })
+  } catch (e) {
+    return res.status(500).json(e);
+  }
+}
+
+module.exports = { addFile, getAllFile, getFileByDiapoId, switchParamsDiapo, deleteFile };

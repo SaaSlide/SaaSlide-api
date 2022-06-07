@@ -36,8 +36,8 @@ const login = async (req, res) => {
   if (!password || !mail) {
     return res.status(400).json({ error: "missing parameters" })
   }
-  try {
 
+  try {
     const data = await User.findOne({ mail: mail })
     if (data) {
       bcrypt.compare(password, data.password, async (err, response) => {
@@ -61,7 +61,6 @@ const login = async (req, res) => {
       return res.status(500).json({ error: "invalid email" })
     }
   } catch (e) {
-    console.log(e)
     return res.status(500).json({ error: "unable to verify user" })
   }
 }
