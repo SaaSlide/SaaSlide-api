@@ -61,6 +61,7 @@ const login = async (req, res) => {
       return res.status(500).json({ error: "invalid email" })
     }
   } catch (e) {
+    console.log(error)
     return res.status(500).json({ error: "unable to verify user" })
   }
 }
