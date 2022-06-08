@@ -1,6 +1,7 @@
 FROM node:14-alpine
 
-RUN apk add graphicsmagick imagemagick
+RUN apk add graphicsmagick imagemagick \
+    && yarn global add nodemon
 
 # equivalent de cd
 WORKDIR /usr/src/app
@@ -11,6 +12,4 @@ RUN yarn install
 
 COPY . .
 
-EXPOSE 8080
-
-CMD ["node", "server.js"]
+CMD ["nodemon", "server.js"]
