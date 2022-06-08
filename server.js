@@ -35,7 +35,8 @@ require("./src/models/db")
 require("./src/routes/routes.js")(app)
 
 // set port, listen for requestsxs
-const PORT = process.env.PORT || 3000
+//const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT
 
 
 app.listen(PORT, () => {
