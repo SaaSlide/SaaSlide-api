@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Diapo = mongoose.model("diapo");
 const InfoDiapo = mongoose.model("infodiapo");
+const Survey = mongoose.model("survey");
+const Quizz = mongoose.model("quizz");
 const { fromPath } = require("pdf2pic");
 const pdf = require("pdf-page-counter");
 const fs = require("fs");
@@ -65,7 +67,6 @@ const getAllFile = async (req, res) => {
         model: "infodiapo",
         select: "_id path page",
       });
-    console.log(data);
     return res.status(200).json(data);
   } catch (e) {
     return res.status(500).json(e);
@@ -73,7 +74,6 @@ const getAllFile = async (req, res) => {
 };
 
 const getFileByDiapoId = async (req, res) => {
-
   try {
     const data = await Diapo.findOne({ _id: req.params.diapoId })
       .select("infoDiapo sendAnswer sendEmoji")
@@ -123,9 +123,39 @@ const switchParamsDiapo = async (req, res) => {
 
 const deleteFile = async (req, res) => {
   try {
-    await Diapo.remove({ _id: req.params.diapoId });
+    const diapo = await Diapo.findById(req.params.diapoId);
+    let deleteDiapo = false
+    for (const element of diapo.infoDiapo) {
+      const infoDiapo = await InfoDiapo.findById(element);
+      if (infoDiapo) {
+        const { surveys, quizzs } = infoDiapo;
+        for (const surveyId of surveys) {
+          const survey = await Survey.findById(surveyId);
+          if(survey) {
+            await Survey.remove({ _id: survey._id });
+          }
+        }
+        for (const quizzId of quizzs) {
+          const quizz = await Quizz.findById(quizzId);
+          if (quizz) {
+            await Quizz.remove({ _id: quizz._id });
+          }
+        }
+        if (surveys.length === 0 && quizzs.length === 0) {
+          const infoDiapo = await InfoDiapo.findById(element);
+          if(infoDiapo) {
+            await InfoDiapo.remove({ _id: infoDiapo._id });
+            deleteDiapo = true
+          }
+        }
+      }
+    }
+    if(deleteDiapo) {
+      await Diapo.remove({ _id: req.params.diapoId });
+    }
     return res.status(200).json({ message: "diapo delete" });
   } catch (e) {
+    console.log(e)
     return res.status(500).json(e);
   }
 };
