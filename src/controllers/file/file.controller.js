@@ -51,6 +51,7 @@ const addFile = async (req, res) => {
           users: req.userId,
         });
         await newDiapo.save();
+        fs.unlinkSync(`public/uploads/${filename}`)
         return res.status(200).json({ message: "Success" });
       });
   } else {
@@ -123,39 +124,43 @@ const switchParamsDiapo = async (req, res) => {
 
 const deleteFile = async (req, res) => {
   try {
-    const diapo = await Diapo.findById(req.params.diapoId);
-    let deleteDiapo = false
-    for (const element of diapo.infoDiapo) {
-      const infoDiapo = await InfoDiapo.findById(element);
-      if (infoDiapo) {
-        const { surveys, quizzs } = infoDiapo;
-        for (const surveyId of surveys) {
-          const survey = await Survey.findById(surveyId);
-          if(survey) {
-            await Survey.remove({ _id: survey._id });
+      const diapo = await Diapo.findById(req.params.diapoId);
+      let deleteDiapo = false
+      for (const element of diapo.infoDiapo) {
+        const infoDiapo = await InfoDiapo.findById(element);
+        if (infoDiapo) {
+          let { surveys, quizzs, path } = infoDiapo;
+          path = path.substring(2);
+          if(fs.existsSync(path)) {
+            fs.unlinkSync(path)
           }
-        }
-        for (const quizzId of quizzs) {
-          const quizz = await Quizz.findById(quizzId);
-          if (quizz) {
-            await Quizz.remove({ _id: quizz._id });
+          for (const surveyId of surveys) {
+            const survey = await Survey.findById(surveyId);
+            if(survey) {
+              await Survey.remove({ _id: survey._id });
+            }
           }
-        }
-        if (surveys.length === 0 && quizzs.length === 0) {
-          const infoDiapo = await InfoDiapo.findById(element);
-          if(infoDiapo) {
-            await InfoDiapo.remove({ _id: infoDiapo._id });
-            deleteDiapo = true
+          for (const quizzId of quizzs) {
+            const quizz = await Quizz.findById(quizzId);
+            if (quizz) {
+              await Quizz.remove({ _id: quizz._id });
+            }
+          }
+          if (surveys.length === 0 && quizzs.length === 0) {
+            const infoDiapo = await InfoDiapo.findById(element);
+            if(infoDiapo) {
+              await InfoDiapo.remove({ _id: infoDiapo._id });
+              deleteDiapo = true
+            }
           }
         }
       }
-    }
-    if(deleteDiapo) {
-      await Diapo.remove({ _id: req.params.diapoId });
-    }
+      if(deleteDiapo) {
+        await Diapo.remove({ _id: req.params.diapoId });
+      }
     return res.status(200).json({ message: "diapo delete" });
   } catch (e) {
-    console.log(e)
+    console.log(e);
     return res.status(500).json(e);
   }
 };
