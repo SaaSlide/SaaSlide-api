@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "engines": {
-    "node": "14.x"
+    "node": "14.x",
+    "yarn": "^0.21"
   },
   "scripts": {
     "start": "nodemon server.js",
