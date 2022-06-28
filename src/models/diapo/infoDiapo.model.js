@@ -34,6 +34,12 @@ let InfoDiapoSchema = new Schema({
       ref: "quizz",
     },
   ],
+  notes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "notes",
+    },
+  ],
 });
 
 mongoose.model("infodiapo", InfoDiapoSchema);

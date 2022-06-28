@@ -8,6 +8,7 @@ module.exports = (app) => {
   const fileController = require("../controllers/file/file.controller.js");
   const surveyController = require("../controllers/survey/survey.controller.js");
   const quizzController = require("../controllers/quizz/quizz.controller.js");
+  const noteController = require("../controllers/note/note.controller.js");
 
   /**
    * TEST API
@@ -59,6 +60,14 @@ module.exports = (app) => {
   app.post("/api/quizz/:pageId", quizzController.createQuizz);
   app.put("/api/quizz/:quizzId", quizzController.updateQuizz);
   app.delete("/api/quizz/:quizzId", quizzController.deleteQuizz);
+
+  /**
+   * NOTE
+   */
+  app.get("/api/note/:pageId", noteController.getNote);
+  app.post("/api/note/:pageId", noteController.createNote);
+  app.put("/api/note/:noteId", noteController.updateNote);
+  app.delete("/api/note/:noteId", noteController.deleteNote);
 
   /**
    * 404 NOT FOUND
