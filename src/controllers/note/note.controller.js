@@ -14,10 +14,10 @@ const createNote = async (req, res) => {
     await newNote.save();
     await InfoDiapo.findByIdAndUpdate(
       pageId,
-      { $push: { quizzs: newNote.id } },
+      { $push: { notes: newNote.id } },
       { new: true }
     );
-    return res.status(200).json({ message: "create quizz" });
+    return res.status(200).json({ message: "create notes" });
   } catch (e) {
     return res.status(500).json(e);
   }
@@ -25,7 +25,6 @@ const createNote = async (req, res) => {
 
 const getNote = async (req, res) => {
   const { pageId } = req.params;
-
   try {
     const data = await InfoDiapo.findById(pageId)
       .select("notes")
@@ -36,6 +35,7 @@ const getNote = async (req, res) => {
           select: "_id description",
         },
       ]);
+
     return res.status(200).json(data);
   } catch (e) {
     return res.status(500).json(e);
@@ -45,10 +45,10 @@ const getNote = async (req, res) => {
 const updateNote = async (req, res) => {
   const { noteId } = req.params;
 
-  let { note } = req.body;
+  let { description } = req.body;
   const updates = {};
   if (description?.length) {
-    updates.note = note;
+    updates.description = description;
   }
 
   try {
@@ -64,7 +64,7 @@ const deleteNote = async (req, res) => {
 
   try {
     await Note.remove({ _id: noteId });
-    return res.status(200).json({ message: "quizz note" });
+    return res.status(200).json({ message: "delete note" });
   } catch (e) {
     return res.status(500).json(e);
   }

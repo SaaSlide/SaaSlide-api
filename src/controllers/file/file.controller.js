@@ -81,7 +81,7 @@ const getFileByDiapoId = async (req, res) => {
       .populate({
         path: "infoDiapo",
         model: "infodiapo",
-        select: "_id path page surveys quizzs",
+        select: "_id path page surveys quizzs notes",
         populate: [
           {
             path: "surveys",
@@ -92,6 +92,10 @@ const getFileByDiapoId = async (req, res) => {
             path: "quizzs",
             model: "quizz",
             select: "_id question possibilities",
+          },
+          {
+            path: "notes",
+            model: "note",
           },
         ],
       });
