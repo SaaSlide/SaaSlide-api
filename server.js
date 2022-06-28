@@ -16,14 +16,15 @@ const app = express()
 app.use('/public', express.static(__dirname + '/public'));
 // enable cors
 app.use(cors())
-app.options("*", cors())
+app.options("*", cors({
+  credentials: true,
+  origin: 'http://localhost:3000',
+}))
 // parse json request body
 app.use(express.json())
 app.use(cookieParser())
 
-
-
-
+app.enable('trust proxy');
 // Display logs of api
 app.use(morgan("combined", { stream: winston.stream }))
 
