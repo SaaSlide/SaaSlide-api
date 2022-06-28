@@ -29,6 +29,17 @@ module.exports = (app) => {
   app.post("/auth/register", authController.register);
   app.post("/auth/login", authController.login);
 
+  /*
+  * COOKIE
+  */
+  app.get('/delete-cookie', (req, res) => {
+    const cookies = req.cookies;
+    if(cookies.cookieUser) {
+      res.clearCookie('cookieUser');
+      return res.status(200).json("Cookie was delete")
+    }
+  });
+
   /**
    * USER
    */

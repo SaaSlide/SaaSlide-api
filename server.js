@@ -5,6 +5,7 @@ const helmet = require("helmet")
 const figlet = require("figlet")
 const bodyParser = require("body-parser")
 const process = require("process")
+const cookieParser = require('cookie-parser')
 
 
 const winston = require("./src/config/winston.js")
@@ -18,6 +19,7 @@ app.use(cors())
 app.options("*", cors())
 // parse json request body
 app.use(express.json())
+app.use(cookieParser())
 
 
 

@@ -37,6 +37,10 @@ const login = async (req, res) => {
     return res.status(400).json({ error: "missing parameters" })
   }
 
+
+  // tokenUser, tokenJWT, gérer la date, domain
+
+
   try {
     const data = await User.findOne({ mail: mail })
     if (data) {
@@ -44,6 +48,10 @@ const login = async (req, res) => {
         if(response){
           try {
             let token = jwtUtils.generateTokenForUser(data)
+            res.cookie('cookieUser', token, {
+              maxAge: 1000 * 60 * 60 * 24,
+              httpOnly: true
+            });
             return res.status(200).json({
               id: data._id,
               name: data.name,
