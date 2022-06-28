@@ -50,7 +50,9 @@ const login = async (req, res) => {
             let token = jwtUtils.generateTokenForUser(data)
             res.cookie('cookieUser', token, {
               maxAge: 1000 * 60 * 60 * 24,
-              httpOnly: true
+              // httpOnly: true, // cookie par récupèrable par un script js
+              // secure: true, // var env prod si http
+              // sameSite: true, // cookie ne soit pas utilisable sur un autre site
             });
             return res.status(200).json({
               id: data._id,
