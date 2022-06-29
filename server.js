@@ -10,18 +10,17 @@ const cookieParser = require('cookie-parser')
 
 const winston = require("./src/config/winston.js")
 
+
 require("dotenv").config()
 
 const app = express()
 app.use('/public', express.static(__dirname + '/public'));
-// enable cors
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-app.options("*", cors())
+
+app.options("http://localhost:3000/", cors())
+app.use(cors({
+  origin: "http://localhost:3000/",
+  credentials: true
+}))
 // parse json request body
 app.use(express.json())
 app.use(cookieParser())
@@ -64,5 +63,3 @@ app.listen(PORT, () => {
     }
   )
 })
-
-module.exports = app

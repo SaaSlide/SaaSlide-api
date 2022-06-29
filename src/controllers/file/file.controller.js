@@ -33,6 +33,7 @@ const addFile = async (req, res) => {
         }
       })
       .then(async function () {
+        let idDiapo = null 
         let idsOfInfoDiapo = [];
         for (const element of arrayOfPng) {
           const { name, size, fileSize, path, page } = element;
@@ -44,6 +45,7 @@ const addFile = async (req, res) => {
             page,
           });
           idsOfInfoDiapo.push(newInfoDiapo._id);
+          idDiapo= newInfoDiapo._id 
           await newInfoDiapo.save();
         }
         const newDiapo = new Diapo({
@@ -52,7 +54,8 @@ const addFile = async (req, res) => {
         });
         await newDiapo.save();
         fs.unlinkSync(`public/uploads/${filename}`)
-        return res.status(200).json({ message: "Success" });
+
+        return res.status(200).json({ message: "Success", id:idDiapo });
       });
   } else {
     return res.status(400).json({ message: "You don't have any file" });
