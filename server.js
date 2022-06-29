@@ -16,9 +16,9 @@ require("dotenv").config()
 const app = express()
 app.use('/public', express.static(__dirname + '/public'));
 
-app.options("http://localhost:3000/", cors())
+app.options("http://localhost:3000", cors())
 app.use(cors({
-  origin: "http://localhost:3000/",
+  origin: "http://localhost:3000",
   credentials: true
 }))
 // parse json request body
@@ -63,3 +63,5 @@ app.listen(PORT, () => {
     }
   )
 })
+
+module.exports = app
