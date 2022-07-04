@@ -73,13 +73,17 @@ io.on("connection", (socket) => {
   });
 });
 
+
 app.use("/public", express.static(__dirname + "/public"));
 // enable cors
-app.use(cors());
-app.options("*", cors());
+app.options(FRONT_URL, cors())
+app.use(cors({
+  origin: FRONT_URL,
+  credentials: true
+}))
 // parse json request body
-app.use(express.json());
-app.use(cookieParser());
+app.use(express.json())
+app.use(cookieParser())
 
 // Display logs of api
 app.use(morgan("combined", { stream: winston.stream }));
