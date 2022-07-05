@@ -1,0 +1,19 @@
+executors:
+  my-executor:
+    docker:
+      - image: "cimg/base:stable"
+jobs:
+  Hello-Saaslide:
+    executor: node/default
+    steps:
+      - run:
+          name: Hello Saaslide
+          command: |
+            echo 'Hello Saaslide'
+orbs:
+  node: circleci/node@4.0.1
+version: 2.1
+workflows:
+  Saaslide:
+    jobs:
+      - Hello-Sasslide

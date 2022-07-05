@@ -113,7 +113,6 @@ app.listen(PORT, () => {
         console.dir(err);
         return;
       }
-      console.log(data);
       console.log(`Server is running on port ${PORT}.`);
       httpServer.listen(SOCKET_PORT, () => {
         console.log(`Socket IO is running on port ${SOCKET_PORT}.`);
