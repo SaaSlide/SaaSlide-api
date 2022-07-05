@@ -2792,7 +2792,7 @@
     "micromatch" "^2.3.11"
     "parse-gitignore" "^0.2.0"
 
-"glob-fs@^0.1.6", "glob-fs@^0.1.7":
+"glob-fs@^0.1.7":
   "integrity" "sha512-f0U3u9xK8MEYtKDCnZXvZrZAy4uNp+KSA4xfaKI/NxbE6HXhqUBQ485Uwd6jQa/Q6z1yKi804WT9y53RrwuMxQ=="
   "resolved" "https://registry.npmjs.org/glob-fs/-/glob-fs-0.1.7.tgz"
   "version" "0.1.7"
@@ -4262,7 +4262,7 @@
   "resolved" "https://registry.npmjs.org/lodash.truncate/-/lodash.truncate-4.4.2.tgz"
   "version" "4.4.2"
 
-"lodash@^4.17.4", "lodash@^4.7.0":
+"lodash@^4.7.0":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
   "resolved" "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz"
   "version" "4.17.21"
@@ -4414,6 +4414,7 @@
     "picomatch" "^2.3.1"
 
 "micromatch@jonschlinkert/micromatch#2.2.0":
+  "resolved" "git+ssh://git@github.com/jonschlinkert/micromatch.git#5017fd78202e04c684cc31d3c2fb1f469ea222ff"
   "version" "2.2.0"
   dependencies:
     "arr-diff" "^1.0.1"
@@ -5073,19 +5074,10 @@
   dependencies:
     "fast-diff" "^1.1.2"
 
-"prettier@^1.3.1", "prettier@^2.4.1", "prettier@>=1.13.0":
+"prettier@^2.4.1", "prettier@>=1.13.0":
   "integrity" "sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew=="
   "resolved" "https://registry.npmjs.org/prettier/-/prettier-2.6.2.tgz"
   "version" "2.6.2"
-
-"prettierrc@^0.0.0-5":
-  "integrity" "sha512-sBjveg65i5be6GKvOCOpOe6hNFAen06UA/v8Isfov+BqY4ggfMXSK/d40RcmCEGyYZRwUKHNnvCJqND9dCFEGw=="
-  "resolved" "https://registry.npmjs.org/prettierrc/-/prettierrc-0.0.0-5.tgz"
-  "version" "0.0.0-5"
-  dependencies:
-    "glob-fs" "^0.1.6"
-    "lodash" "^4.17.4"
-    "rc" "^1.2.1"
 
 "pretty-format@^27.5.1":
   "integrity" "sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ=="
@@ -5198,7 +5190,7 @@
     "iconv-lite" "0.4.24"
     "unpipe" "1.0.0"
 
-"rc@^1.2.1", "rc@^1.2.8":
+"rc@^1.2.8":
   "integrity" "sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw=="
   "resolved" "https://registry.npmjs.org/rc/-/rc-1.2.8.tgz"
   "version" "1.2.8"
@@ -6123,6 +6115,11 @@
   "integrity" "sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c="
   "resolved" "https://registry.npmjs.org/typedarray/-/typedarray-0.0.6.tgz"
   "version" "0.0.6"
+
+"typescript@>=2.8.0 || >= 3.2.0-dev || >= 3.3.0-dev || >= 3.4.0-dev || >= 3.5.0-dev || >= 3.6.0-dev || >= 3.6.0-beta || >= 3.7.0-dev || >= 3.7.0-beta":
+  "integrity" "sha512-C0WQT0gezHuw6AdY1M2jxUO83Rjf0HP7Sk1DtXj6j1EwkQNZrHAg2XPWlq62oqEhYvONq5pkC2Y9oPljWToLmQ=="
+  "resolved" "https://registry.npmjs.org/typescript/-/typescript-4.7.4.tgz"
+  "version" "4.7.4"
 
 "unbox-primitive@^1.0.2":
   "integrity" "sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw=="
