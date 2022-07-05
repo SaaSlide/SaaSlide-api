@@ -52,7 +52,7 @@ module.exports = (app) => {
    */
   app.post("/api/diapo", multer, fileController.addFile);
   app.get("/api/diapo", fileController.getAllFile);
-  app.get("/api/diapo/:diapoId", fileController.getFileByDiapoId);
+  app.get("/diapo/:diapoId", fileController.getFileByDiapoId);
   app.put("/api/diapo/params/:diapoId", fileController.switchParamsDiapo);
   app.delete("/api/diapo/:diapoId", fileController.deleteFile);
 
