@@ -22,6 +22,10 @@ let InfoDiapoSchema = new Schema({
     type: Number,
     required: false,
   },
+  pathPdf: {
+    type: String,
+    required: false,
+  },
   surveys: [
     {
       type: Schema.Types.ObjectId,

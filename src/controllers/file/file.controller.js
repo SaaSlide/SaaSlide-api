@@ -43,6 +43,7 @@ const addFile = async (req, res) => {
             fileSize,
             path,
             page,
+            pathPdf:`./public/uploads/${filename}`
           });
           idsOfInfoDiapo.push(newInfoDiapo._id);
           idDiapo= newInfoDiapo._id 
@@ -69,7 +70,7 @@ const getAllFile = async (req, res) => {
       .populate({
         path: "infoDiapo",
         model: "infodiapo",
-        select: "_id path page",
+        select: "_id path pathPdf page",
       });
     return res.status(200).json(data);
   } catch (e) {
@@ -84,7 +85,7 @@ const getFileByDiapoId = async (req, res) => {
       .populate({
         path: "infoDiapo",
         model: "infodiapo",
-        select: "_id path page surveys quizzs notes",
+        select: "_id path pathPdf page surveys quizzs notes",
         populate: [
           {
             path: "surveys",
