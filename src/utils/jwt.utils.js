@@ -10,7 +10,7 @@ const generateTokenForUser = (userData) => {
     },
     JWT_SIGN_SECRET,
     {
-      expiresIn: "1h",
+      expiresIn: "24h",
     }
   )
 }
