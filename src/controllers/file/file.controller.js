@@ -46,7 +46,6 @@ const addFile = async (req, res) => {
             pathPdf:`./public/uploads/${filename}`
           });
           idsOfInfoDiapo.push(newInfoDiapo._id);
-          idDiapo= newInfoDiapo._id 
           await newInfoDiapo.save();
         }
         const newDiapo = new Diapo({
@@ -54,7 +53,7 @@ const addFile = async (req, res) => {
           users: req.userId,
         });
         await newDiapo.save();
-        return res.status(200).json({ message: "Success", id:idDiapo });
+        return res.status(200).json({ message: "Success", id:newDiapo._id });
       });
   } else {
     return res.status(400).json({ message: "You don't have any file" });
