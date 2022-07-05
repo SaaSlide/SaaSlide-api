@@ -16,4 +16,4 @@ version: 2.1
 workflows:
   SaaSlide-api:
     jobs:
-      - Hello-Sasslide
+      - Hello-Saaslide
