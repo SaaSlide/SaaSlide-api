@@ -54,8 +54,6 @@ const addFile = async (req, res) => {
           users: req.userId,
         });
         await newDiapo.save();
-        fs.unlinkSync(`public/uploads/${filename}`)
-
         return res.status(200).json({ message: "Success", id:idDiapo });
       });
   } else {
