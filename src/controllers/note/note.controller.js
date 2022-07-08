@@ -12,12 +12,18 @@ const createNote = async (req, res) => {
 
   try {
     await newNote.save();
-    await InfoDiapo.findByIdAndUpdate(
+    const data = await InfoDiapo.findByIdAndUpdate(
       pageId,
       { $push: { notes: newNote.id } },
       { new: true }
-    );
-    return res.status(200).json({ message: "create notes" });
+    ).populate([
+      {
+        path: "notes",
+        model: "note",
+        select: "_id description",
+      },
+    ]);
+    return res.status(200).json(data.notes);
   } catch (e) {
     return res.status(500).json(e);
   }
@@ -53,7 +59,11 @@ const updateNote = async (req, res) => {
 
   try {
     await Note.findByIdAndUpdate(noteId, updates);
-    return res.status(200).json({ message: "update note" });
+    const newNotes = {
+      id: noteId,
+      description: updates.description,
+    };
+    return res.status(200).json(newNotes);
   } catch (e) {
     return res.status(500).json(e);
   }

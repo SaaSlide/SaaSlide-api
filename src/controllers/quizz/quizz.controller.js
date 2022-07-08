@@ -3,12 +3,12 @@ const Quizz = mongoose.model("quizz");
 const InfoDiapo = mongoose.model("infodiapo");
 
 const createQuizz = async (req, res) => {
-  const { question, possibilties } = req.body;
+  const { question, possibilities } = req.body;
   const { pageId } = req.params;
 
   const tableOfQuizz = [];
 
-  for (const element of possibilties) {
+  for (const element of possibilities) {
     let object = {};
     const { choice, answer } = element;
     object.choice = choice;
@@ -25,12 +25,18 @@ const createQuizz = async (req, res) => {
 
   try {
     await newQuizz.save();
-    await InfoDiapo.findByIdAndUpdate(
+    const data = await InfoDiapo.findByIdAndUpdate(
       pageId,
       { $push: { quizzs: newQuizz.id } },
       { new: true }
-    );
-    return res.status(200).json({ message: "create quizz" });
+    ).populate([
+      {
+        path: "quizzs",
+        model: "quizz",
+        select: "_id question possibilities",
+      },
+    ]);
+    return res.status(200).json(data.quizzs);
   } catch (e) {
     return res.status(500).json(e);
   }
@@ -58,19 +64,24 @@ const getQuizz = async (req, res) => {
 const updateQuizz = async (req, res) => {
   const { quizzId } = req.params;
 
-  let { name, quizz } = req.body;
+  let { question, quizz } = req.body;
   const updates = {};
 
-  if (name?.length) {
-    updates.name = name;
+  if (question?.length) {
+    updates.question = question;
   }
   if (quizz?.length) {
     updates.quizz = quizz;
   }
 
   try {
-    await Quizz.findByIdAndUpdate(quizzId, updates);
-    return res.status(200).json({ message: "update quizz" });
+    const data = await Quizz.findByIdAndUpdate(quizzId, updates);
+    const newQuizz = {
+      id: quizzId,
+      question: updates.question,
+      quizz: updates.quizz
+    }
+    return res.status(200).json(newQuizz);
   } catch (e) {
     return res.status(500).json(e);
   }

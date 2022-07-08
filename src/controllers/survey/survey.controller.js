@@ -12,12 +12,18 @@ const createSurvey = async (req, res) => {
 
   try {
     await newSurvey.save();
-    await InfoDiapo.findByIdAndUpdate(
+    const data = await InfoDiapo.findByIdAndUpdate(
       pageId,
       { $push: { surveys: newSurvey.id } },
       { new: true }
-    );
-    return res.status(200).json({ message: "success" });
+    ).populate([
+      {
+        path: "surveys",
+        model: "survey",
+        select: "_id name survey",
+      },
+    ]);
+    return res.status(200).json(data.surveys);
   } catch (e) {
     return res.status(500).json(e);
   }
@@ -58,7 +64,12 @@ const updateSurvey = async (req, res) => {
 
   try {
     await Survey.findByIdAndUpdate(surveyId, updates);
-    return res.status(200).json({ message: "update survey" });
+    const newSurvey = {
+      id: surveyId,
+      name: updates.name,
+      survey: updates.survey
+    }
+    return res.status(200).json(newSurvey);
   } catch (e) {
     return res.status(500).json(e);
   }
