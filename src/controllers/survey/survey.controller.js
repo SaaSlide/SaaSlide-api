@@ -8,6 +8,7 @@ const createSurvey = async (req, res) => {
   const newSurvey = new Survey({
     name,
     survey,
+    count: 0
   });
 
   try {
@@ -20,7 +21,7 @@ const createSurvey = async (req, res) => {
       {
         path: "surveys",
         model: "survey",
-        select: "_id name survey",
+        select: "_id name survey count",
       },
     ]);
     return res.status(200).json(data.surveys.slice(-1).pop());
@@ -39,7 +40,7 @@ const getSurvey = async (req, res) => {
         {
           path: "surveys",
           model: "survey",
-          select: "_id name survey",
+          select: "_id name survey count",
         },
       ]);
     return res.status(200).json(data);
@@ -52,7 +53,7 @@ const getSurvey = async (req, res) => {
 const updateSurvey = async (req, res) => {
   const { surveyId } = req.params;
 
-  let { name, survey } = req.body;
+  let { name, survey, count } = req.body;
   const updates = {};
 
   if (name?.length) {
@@ -62,12 +63,17 @@ const updateSurvey = async (req, res) => {
     updates.survey = survey;
   }
 
+  if (count) {
+    updates.count = count;
+  }
+
   try {
-    await Survey.findByIdAndUpdate(surveyId, updates);
+    const data = await Survey.findByIdAndUpdate(surveyId, updates);
     const newSurvey = {
-      _id: surveyId,
-      name: updates.name,
-      survey: updates.survey
+      _id: surveyId ? surveyId : data._id,
+      name: updates.name ? updates.name: data.name,
+      survey: updates.survey ? updates.survey: data.survey,
+      count: updates.count ? updates.count : data.count
     }
     return res.status(200).json(newSurvey);
   } catch (e) {
