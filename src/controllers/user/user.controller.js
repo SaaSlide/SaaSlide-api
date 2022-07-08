@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = mongoose.model("user");
+var bcrypt = require("bcrypt");
 
 const getCurrentUser = async (req, res) => {
   try {
@@ -15,6 +16,8 @@ const updateProfileCurrentUser = async (req, res) => {
   let { name, mail, picture, password } = req.body;
   const updates = {};
 
+  password = await bcrypt.hash(req.body.password, 3);
+
   if (name?.length) {
     updates.name = name;
   }
@@ -27,7 +30,7 @@ const updateProfileCurrentUser = async (req, res) => {
   if (password?.length) {
     updates.password = password;
   }
-
+  
   try {
     await User.findByIdAndUpdate(req.userId, updates);
     return res.status(200).json({ message: "update profile" });
@@ -37,14 +40,17 @@ const updateProfileCurrentUser = async (req, res) => {
   }
 };
 
-
 const deleteCurrentUser = async (req, res) => {
   try {
-    await User.remove({ _id: req.userId })
-    return res.status(200).json({ message: "user delete" })
+    await User.remove({ _id: req.userId });
+    return res.status(200).json({ message: "user delete" });
   } catch (e) {
-    return res.status(500).json(e)
+    return res.status(500).json(e);
   }
-}
+};
 
-module.exports = { getCurrentUser, updateProfileCurrentUser, deleteCurrentUser };
+module.exports = {
+  getCurrentUser,
+  updateProfileCurrentUser,
+  deleteCurrentUser,
+};
