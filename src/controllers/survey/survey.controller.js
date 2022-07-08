@@ -23,7 +23,7 @@ const createSurvey = async (req, res) => {
         select: "_id name survey",
       },
     ]);
-    return res.status(200).json(data.surveys);
+    return res.status(200).json(data.surveys.slice(-1).pop());
   } catch (e) {
     return res.status(500).json(e);
   }

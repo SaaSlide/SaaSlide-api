@@ -23,7 +23,7 @@ const createNote = async (req, res) => {
         select: "_id description",
       },
     ]);
-    return res.status(200).json(data.notes);
+    return res.status(200).json(data.notes.slice(-1).pop());
   } catch (e) {
     return res.status(500).json(e);
   }

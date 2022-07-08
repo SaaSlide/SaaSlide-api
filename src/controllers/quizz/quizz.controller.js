@@ -36,7 +36,7 @@ const createQuizz = async (req, res) => {
         select: "_id question possibilities",
       },
     ]);
-    return res.status(200).json(data.quizzs);
+    return res.status(200).json(data.quizzs.slice(-1).pop());
   } catch (e) {
     return res.status(500).json(e);
   }
@@ -75,7 +75,7 @@ const updateQuizz = async (req, res) => {
   }
 
   try {
-    const data = await Quizz.findByIdAndUpdate(quizzId, updates);
+   await Quizz.findByIdAndUpdate(quizzId, updates);
     const newQuizz = {
       id: quizzId,
       question: updates.question,
