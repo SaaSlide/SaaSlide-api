@@ -65,7 +65,7 @@ const updateSurvey = async (req, res) => {
   try {
     await Survey.findByIdAndUpdate(surveyId, updates);
     const newSurvey = {
-      id: surveyId,
+      _id: surveyId,
       name: updates.name,
       survey: updates.survey
     }

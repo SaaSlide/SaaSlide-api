@@ -60,7 +60,7 @@ const updateNote = async (req, res) => {
   try {
     await Note.findByIdAndUpdate(noteId, updates);
     const newNotes = {
-      id: noteId,
+      _id: noteId,
       description: updates.description,
     };
     return res.status(200).json(newNotes);

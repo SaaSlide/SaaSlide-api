@@ -77,7 +77,7 @@ const updateQuizz = async (req, res) => {
   try {
    await Quizz.findByIdAndUpdate(quizzId, updates);
     const newQuizz = {
-      id: quizzId,
+      _id: quizzId,
       question: updates.question,
       quizz: updates.quizz
     }
