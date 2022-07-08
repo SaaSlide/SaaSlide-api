@@ -64,23 +64,23 @@ const getQuizz = async (req, res) => {
 const updateQuizz = async (req, res) => {
   const { quizzId } = req.params;
 
-  let { question, quizz } = req.body;
+  let { question, possibilities } = req.body;
   const updates = {};
 
   if (question?.length) {
     updates.question = question;
   }
-  if (quizz?.length) {
-    updates.quizz = quizz;
+  if (possibilities?.length) {
+    updates.possibilities = possibilities;
   }
 
   try {
-   await Quizz.findByIdAndUpdate(quizzId, updates);
+    await Quizz.findByIdAndUpdate(quizzId, updates);
     const newQuizz = {
       _id: quizzId,
       question: updates.question,
-      quizz: updates.quizz
-    }
+      possibilities: updates.possibilities,
+    };
     return res.status(200).json(newQuizz);
   } catch (e) {
     return res.status(500).json(e);
