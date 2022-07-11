@@ -16,16 +16,6 @@ jobs:
       - checkout
       - node/install:
           install-yarn: true
-      - run:
-          label: Use nvm for a specific node version...
-          command: |
-            set +e
-            # if you need to install it, uncomment the following
-            # wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.1/install.sh | bash &&  sudo /opt/circleci/.nvm/nvm.sh
-            export NVM_DIR="/opt/circleci/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install v18.5.0            
-            npm install -g yarn 
       - run: node --version
   Verify-eslint:
     executor: my-executor
@@ -52,6 +42,16 @@ orbs:
 version: 2.1
 workflows:
   SaaSlide-api:
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Install nvm
+          command: |
+            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+            echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
+            echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
     jobs:
       - Hello-Saaslide
       - Install-node-example
