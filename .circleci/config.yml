@@ -18,6 +18,7 @@ jobs:
           install-yarn: true
       - run: node --version
   Unit-test:
+    executor: my-executor
     steps:
       - run:
           name: Unit-test
