@@ -17,14 +17,25 @@ jobs:
       - node/install:
           install-yarn: true
       - run: node --version
-  Unit-test:
-      executor: my-executor
-      steps:
+  Verify-eslint:
+    executor: my-executor
+    steps:
       - checkout
       - node/install:
           install-yarn: true
       - node/install-packages:
           override-ci-command: yarn install
+      - run:
+          command: |
+            yarn run eslint
+  # Unit-test:
+  #     executor: my-executor
+  #     steps:
+  #     - checkout
+  #     - node/install:
+  #         install-yarn: true
+  #     - node/install-packages:
+  #         override-ci-command: yarn install
       
 orbs:
   node: circleci/node@4.0.1
@@ -34,4 +45,4 @@ workflows:
     jobs:
       - Hello-Saaslide
       - Install-node-example
-      - Unit-test
+      - Verify-eslint
