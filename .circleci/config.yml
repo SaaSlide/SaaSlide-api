@@ -14,6 +14,12 @@ jobs:
     executor: my-executor
     steps:
       - checkout
+      - run:
+        name: Install nvm
+        command: |
+          curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+          echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
+          echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
       - node/install:
           install-yarn: true
       - run: node --version
@@ -42,16 +48,6 @@ orbs:
 version: 2.1
 workflows:
   SaaSlide-api:
-    steps:
-      - checkout
-      - setup_remote_docker:
-          docker_layer_caching: true
-      - run:
-          name: Install nvm
-          command: |
-            curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
-            echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
-            echo 'source $NVM_DIR/nvm.sh' >> $BASH_ENV
     jobs:
       - Hello-Saaslide
       - Install-node-example
