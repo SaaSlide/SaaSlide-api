@@ -25,7 +25,7 @@ jobs:
           install-yarn: true
       - node/install-packages:
           override-ci-command: yarn install
-    - run: node --version
+      - run: node --version
       - run: yarn run test
 orbs:
   node: circleci/node@4.0.1
