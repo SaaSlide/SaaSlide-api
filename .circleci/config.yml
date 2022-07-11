@@ -20,7 +20,7 @@ jobs:
   Unit-test:
     steps:
       - run:
-          name: Units-test
+          name: Unit-test
           command: |
             yarn run test
 orbs:
