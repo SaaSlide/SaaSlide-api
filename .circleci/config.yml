@@ -20,10 +20,10 @@ jobs:
   Unit-test:
     executor: my-executor
     steps:
-      - node/install:
-          install-yarn: true
+      - checkout
+      - node/install-packages:
+          override-ci-command: yarn install
       - run:
-          name: Unit-test
           command: |
             yarn run test
 orbs:
