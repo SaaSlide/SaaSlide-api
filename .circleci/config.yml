@@ -20,6 +20,8 @@ jobs:
   Unit-test:
     executor: my-executor
     steps:
+      - node/install:
+          install-yarn: true
       - run:
           name: Unit-test
           command: |
