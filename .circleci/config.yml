@@ -4,8 +4,6 @@ executors:
       - image: "cimg/base:stable"
 jobs:
   - run:
-    command: |
-      nvm install 18.5.0
   Hello-Saaslide:
     executor: node/default
     steps:
@@ -37,6 +35,7 @@ jobs:
       - checkout
       - node/install:
           install-yarn: true
+      - run: nvm install 18.5.0
       - node/install-packages:
           override-ci-command: yarn install
       
