@@ -16,6 +16,8 @@ jobs:
       - checkout
       - node/install:
           install-yarn: true
+      - run: nvm install 18.5.0
+      - run: nvm use 18.5.0
       - run: node --version
   Verify-eslint:
     executor: my-executor
