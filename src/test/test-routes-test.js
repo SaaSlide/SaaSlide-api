@@ -2,11 +2,15 @@ const supertest = require("supertest")
 const app = require("../../server.js")
 let chai = require("chai")
 let chaiHttp = require("chai-http")
-// let should = chai.should();
+// eslint-disable-next-line no-unused-vars
+let should = chai.should()
 chai.use(chaiHttp)
-// const fs = require("fs");
-// const { fromPath } = require("pdf2pic");
-// const pdf = require("pdf-page-counter");
+// eslint-disable-next-line no-unused-vars
+const fs = require("fs")
+// eslint-disable-next-line no-unused-vars
+const { fromPath } = require("pdf2pic")
+// eslint-disable-next-line no-unused-vars
+const pdf = require("pdf-page-counter")
 
 
 global.app = app
@@ -22,9 +26,9 @@ describe("/ENDPOINT :", () => {
   describe("/AUTHENTIFICATION :", () => {
     it("1) POST Register", (done) => {
       const account = {
-        mail: "lucastestmocha11@mail.com",
-        name: "lucastestmocha11",
-        password: "lucastestmocha11",
+        mail: "lucastestmocha12@mail.com",
+        name: "lucastestmocha12",
+        password: "lucastestmocha12",
       }
       chai
         .request(app)
@@ -37,8 +41,8 @@ describe("/ENDPOINT :", () => {
     })
     it("2) POST Login", (done) => {
       const newLogin = {
-        mail: "lucastestmocha11@mail.com",
-        password: "lucastestmocha11",
+        mail: "lucastestmocha12@mail.com",
+        password: "lucastestmocha12",
       }
       chai
         .request(app)
