@@ -53,7 +53,7 @@ const login = async (req, res) => {
               // httpOnly: true, // cookie par récupèrable par un script js
               // secure: true, // var env prod si http
               // sameSite: true, // cookie ne soit pas utilisable sur un autre site
-            });
+            })
             return res.status(200).json({
               id: data._id,
               name: data.name,
@@ -71,7 +71,6 @@ const login = async (req, res) => {
       return res.status(500).json({ error: "invalid email" })
     }
   } catch (e) {
-    console.log(error)
     return res.status(500).json({ error: "unable to verify user" })
   }
 }

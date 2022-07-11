@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 let DiapoSchema = new Schema(
   {
@@ -29,6 +29,6 @@ let DiapoSchema = new Schema(
   {
     timestamps: true,
   }
-);
+)
 
-mongoose.model("diapo", DiapoSchema);
+mongoose.model("diapo", DiapoSchema)

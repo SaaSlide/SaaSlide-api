@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 let QuizzSchema = new Schema({
   question: { type: String },
@@ -13,6 +13,6 @@ let QuizzSchema = new Schema({
       }
     }
   ],
-});
+})
 
-mongoose.model("quizz", QuizzSchema);
+mongoose.model("quizz", QuizzSchema)

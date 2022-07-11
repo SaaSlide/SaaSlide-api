@@ -16,10 +16,11 @@ const verifyToken = async (req, res, next) => {
 
   if (token != null) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SIGN_SECRET);
+      // eslint-disable-next-line no-undef
+      const decoded = jwt.verify(token, process.env.JWT_SIGN_SECRET)
       if (decoded != null) {
         req.userId = decoded.id
-        next();
+        next()
       }
     } catch (err) {
       return res.status(400).json({ message: "jwt malformed" })

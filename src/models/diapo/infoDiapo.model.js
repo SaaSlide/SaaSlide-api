@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose")
+const Schema = mongoose.Schema
 
 let InfoDiapoSchema = new Schema({
   name: {
@@ -44,6 +44,6 @@ let InfoDiapoSchema = new Schema({
       ref: "notes",
     },
   ],
-});
+})
 
-mongoose.model("infodiapo", InfoDiapoSchema);
+mongoose.model("infodiapo", InfoDiapoSchema)

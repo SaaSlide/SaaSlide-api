@@ -1,30 +1,30 @@
-const mongoose = require("mongoose");
-const Quizz = mongoose.model("quizz");
-const InfoDiapo = mongoose.model("infodiapo");
+const mongoose = require("mongoose")
+const Quizz = mongoose.model("quizz")
+const InfoDiapo = mongoose.model("infodiapo")
 
 const createQuizz = async (req, res) => {
-  const { question, possibilities } = req.body;
-  const { pageId } = req.params;
+  const { question, possibilities } = req.body
+  const { pageId } = req.params
 
-  const tableOfQuizz = [];
+  const tableOfQuizz = []
 
   for (const element of possibilities) {
-    let object = {};
-    const { choice, answer } = element;
-    object.choice = choice;
-    object.answer = answer;
-    tableOfQuizz.push(object);
+    let object = {}
+    const { choice, answer } = element
+    object.choice = choice
+    object.answer = answer
+    tableOfQuizz.push(object)
   }
 
 
   const newQuizz = new Quizz({
     question,
     possibilities: tableOfQuizz,
-  });
+  })
 
 
   try {
-    await newQuizz.save();
+    await newQuizz.save()
     const data = await InfoDiapo.findByIdAndUpdate(
       pageId,
       { $push: { quizzs: newQuizz.id } },
@@ -35,15 +35,15 @@ const createQuizz = async (req, res) => {
         model: "quizz",
         select: "_id question possibilities",
       },
-    ]);
-    return res.status(200).json(data.quizzs.slice(-1).pop());
+    ])
+    return res.status(200).json(data.quizzs.slice(-1).pop())
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e)
   }
-};
+}
 
 const getQuizz = async (req, res) => {
-  const { pageId } = req.params;
+  const { pageId } = req.params
 
   try {
     const data = await InfoDiapo.findById(pageId)
@@ -54,48 +54,48 @@ const getQuizz = async (req, res) => {
           model: "quizz",
           select: "_id question possibilities",
         },
-      ]);
-    return res.status(200).json(data);
+      ])
+    return res.status(200).json(data)
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e)
   }
-};
+}
 
 const updateQuizz = async (req, res) => {
-  const { quizzId } = req.params;
+  const { quizzId } = req.params
 
-  let { question, possibilities } = req.body;
-  const updates = {};
+  let { question, possibilities } = req.body
+  const updates = {}
 
   if (question?.length) {
-    updates.question = question;
+    updates.question = question
   }
   if (possibilities?.length) {
-    updates.possibilities = possibilities;
+    updates.possibilities = possibilities
   }
 
   try {
-    await Quizz.findByIdAndUpdate(quizzId, updates);
+    await Quizz.findByIdAndUpdate(quizzId, updates)
     const newQuizz = {
       _id: quizzId,
       question: updates.question,
       possibilities: updates.possibilities,
-    };
-    return res.status(200).json(newQuizz);
+    }
+    return res.status(200).json(newQuizz)
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e)
   }
-};
+}
 
 const deleteQuizz = async (req, res) => {
-  const { quizzId } = req.params;
+  const { quizzId } = req.params
 
   try {
-    await Quizz.remove({ _id: quizzId });
-    return res.status(200).json({ message: "quizz delete" });
+    await Quizz.remove({ _id: quizzId })
+    return res.status(200).json({ message: "quizz delete" })
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e)
   }
-};
+}
 
-module.exports = { createQuizz, getQuizz, updateQuizz, deleteQuizz };
+module.exports = { createQuizz, getQuizz, updateQuizz, deleteQuizz }

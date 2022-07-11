@@ -1,85 +1,84 @@
-const supertest = require("supertest");
-const app = require("../../server.js");
-let chai = require("chai");
-let chaiHttp = require("chai-http");
-let should = chai.should();
-chai.use(chaiHttp);
-const fs = require("fs");
-const { fromPath } = require("pdf2pic");
-const pdf = require("pdf-page-counter");
+const supertest = require("supertest")
+const app = require("../../server.js")
+let chai = require("chai")
+let chaiHttp = require("chai-http")
+// let should = chai.should();
+chai.use(chaiHttp)
+// const fs = require("fs");
+// const { fromPath } = require("pdf2pic");
+// const pdf = require("pdf-page-counter");
 
-const expect = chai.expect;
 
-global.app = app;
-global.request = supertest(app);
+global.app = app
+global.request = supertest(app)
 
 /* Variables for test */
 
-global.token;
-global.testToken;
+global.token
+global.testToken
 
 describe("/ENDPOINT :", () => {
-  let token;
+  let token
   describe("/AUTHENTIFICATION :", () => {
     it("1) POST Register", (done) => {
       const account = {
         mail: "lucastestmocha11@mail.com",
         name: "lucastestmocha11",
         password: "lucastestmocha11",
-      };
+      }
       chai
         .request(app)
         .post("/auth/register")
         .send(account)
         .end((err, res) => {
-          res.should.have.status(201);
-          done();
-        });
-    });
+          res.should.have.status(201)
+          done()
+        })
+    })
     it("2) POST Login", (done) => {
       const newLogin = {
         mail: "lucastestmocha11@mail.com",
         password: "lucastestmocha11",
-      };
+      }
       chai
         .request(app)
         .post("/auth/login")
         .send(newLogin)
         .end((err, res) => {
-          res.should.have.status(200);
-          res.body.should.have.property("token");
-          token = res.body.token;
-          done();
-        });
-    });
+          res.should.have.status(200)
+          res.body.should.have.property("token")
+          token = res.body.token
+          done()
+        })
+    })
     it("3) GET Current User", (done) => {
       chai
         .request(app)
         .get("/api/user")
         .set({ Authorization: `Bearer ${token}` })
         .end((err, res) => {
-          res.should.have.status(200);
-          done();
-        });
-    });
+          res.should.have.status(200)
+          done()
+        })
+    })
     it("4) UPDATE Current User", (done) => {
       const updateUser = {
         name: "newlucastestmocha",
         mail: "newlucastestmocha@gmail.com",
         picture: "new picture",
         password: "newpassword",
-      };
+      }
       chai
         .request(app)
         .put("/api/user/profile")
         .set({ Authorization: `Bearer ${token}` })
         .send(updateUser)
         .end((err, res) => {
-          res.should.have.status(200);
-          done();
-        });
-    });
-  });
+          res.should.have.status(200)
+          done()
+        })
+    })
+  })
   // describe("/DIAPO :", () => {
   //   it("1) POST Diapo", () => {
 
@@ -126,9 +125,9 @@ describe("/ENDPOINT :", () => {
         .delete("/api/user")
         .set({ Authorization: `Bearer ${token}` })
         .end((err, res) => {
-          res.should.have.status(200);
-          done();
-        });
-    });
-  });
-});
+          res.should.have.status(200)
+          done()
+        })
+    })
+  })
+})

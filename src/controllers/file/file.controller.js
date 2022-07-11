@@ -1,15 +1,15 @@
-const mongoose = require("mongoose");
-const Diapo = mongoose.model("diapo");
-const InfoDiapo = mongoose.model("infodiapo");
-const Survey = mongoose.model("survey");
-const Quizz = mongoose.model("quizz");
-const { fromPath } = require("pdf2pic");
-const pdf = require("pdf-page-counter");
-const fs = require("fs");
+const mongoose = require("mongoose")
+const Diapo = mongoose.model("diapo")
+const InfoDiapo = mongoose.model("infodiapo")
+const Survey = mongoose.model("survey")
+const Quizz = mongoose.model("quizz")
+const { fromPath } = require("pdf2pic")
+const pdf = require("pdf-page-counter")
+const fs = require("fs")
 
 const addFile = async (req, res) => {
   if (req.file) {
-    const { filename } = req.file;
+    const { filename } = req.file
     const options = {
       density: 100,
       saveFilename: Date.now(),
@@ -17,10 +17,10 @@ const addFile = async (req, res) => {
       format: "png",
       width: 1920,
       height: 1080,
-    };
-    let arrayOfPng = [];
-    const storeAsImage = fromPath(`./public/uploads/${filename}`, options);
-    let dataBuffer = fs.readFileSync(`./public/uploads/${filename}`);
+    }
+    let arrayOfPng = []
+    const storeAsImage = fromPath(`./public/uploads/${filename}`, options)
+    let dataBuffer = fs.readFileSync(`./public/uploads/${filename}`)
     pdf(dataBuffer)
       .then(async function (data) {
         for (
@@ -28,15 +28,14 @@ const addFile = async (req, res) => {
           pageToConvertAsImage <= data.numpages;
           pageToConvertAsImage++
         ) {
-          const data = await storeAsImage(pageToConvertAsImage);
-          arrayOfPng.push(data);
+          const data = await storeAsImage(pageToConvertAsImage)
+          arrayOfPng.push(data)
         }
       })
       .then(async function () {
-        let idDiapo = null 
-        let idsOfInfoDiapo = [];
+        let idsOfInfoDiapo = []
         for (const element of arrayOfPng) {
-          const { name, size, fileSize, path, page } = element;
+          const { name, size, fileSize, path, page } = element
           const newInfoDiapo = new InfoDiapo({
             name,
             size,
@@ -44,21 +43,21 @@ const addFile = async (req, res) => {
             path,
             page,
             pathPdf:`./public/uploads/${filename}`
-          });
-          idsOfInfoDiapo.push(newInfoDiapo._id);
-          await newInfoDiapo.save();
+          })
+          idsOfInfoDiapo.push(newInfoDiapo._id)
+          await newInfoDiapo.save()
         }
         const newDiapo = new Diapo({
           infoDiapo: idsOfInfoDiapo,
           users: req.userId,
-        });
-        await newDiapo.save();
-        return res.status(200).json({ message: "Success", id:newDiapo._id });
-      });
+        })
+        await newDiapo.save()
+        return res.status(200).json({ message: "Success", id:newDiapo._id })
+      })
   } else {
-    return res.status(400).json({ message: "You don't have any file" });
+    return res.status(400).json({ message: "You don't have any file" })
   }
-};
+}
 
 const getAllFile = async (req, res) => {
   try {
@@ -68,12 +67,12 @@ const getAllFile = async (req, res) => {
         path: "infoDiapo",
         model: "infodiapo",
         select: "_id path pathPdf page",
-      });
-    return res.status(200).json(data);
+      })
+    return res.status(200).json(data)
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e)
   }
-};
+}
 
 const getFileByDiapoId = async (req, res) => {
   try {
@@ -99,19 +98,19 @@ const getFileByDiapoId = async (req, res) => {
             model: "note",
           },
         ],
-      });
+      })
     if (data === null) {
-      return res.status(400).json("You don't have any diapo with this id");
+      return res.status(400).json("You don't have any diapo with this id")
     }
-    return res.status(200).json(data);
+    return res.status(200).json(data)
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e)
   }
-};
+}
 
 const switchParamsDiapo = async (req, res) => {
-  const { emoji, answer } = req.query;
-  const { diapoId } = req.params;
+  const { emoji, answer } = req.query
+  const { diapoId } = req.params
 
   try {
     await Diapo.findByIdAndUpdate(
@@ -120,55 +119,55 @@ const switchParamsDiapo = async (req, res) => {
         $set: { sendEmoji: emoji, sendAnswer: answer },
       },
       { new: true }
-    );
-    return res.status(200).json({ message: "params are successfully updated" });
+    )
+    return res.status(200).json({ message: "params are successfully updated" })
   } catch (e) {
-    return res.status(500).json(e);
+    return res.status(500).json(e)
   }
-};
+}
 
 const deleteFile = async (req, res) => {
   try {
-      const diapo = await Diapo.findById(req.params.diapoId);
+      const diapo = await Diapo.findById(req.params.diapoId)
       let deleteDiapo = false
       for (const element of diapo.infoDiapo) {
-        const infoDiapo = await InfoDiapo.findById(element);
+        const infoDiapo = await InfoDiapo.findById(element)
         if (infoDiapo) {
-          let { surveys, quizzs, path } = infoDiapo;
-          path = path.substring(2);
+          let { surveys, quizzs, path } = infoDiapo
+          path = path.substring(2)
           if(fs.existsSync(path)) {
             fs.unlinkSync(path)
           }
           for (const surveyId of surveys) {
-            const survey = await Survey.findById(surveyId);
+            const survey = await Survey.findById(surveyId)
             if(survey) {
-              await Survey.remove({ _id: survey._id });
+              await Survey.remove({ _id: survey._id })
             }
           }
           for (const quizzId of quizzs) {
-            const quizz = await Quizz.findById(quizzId);
+            const quizz = await Quizz.findById(quizzId)
             if (quizz) {
-              await Quizz.remove({ _id: quizz._id });
+              await Quizz.remove({ _id: quizz._id })
             }
           }
           if (surveys.length === 0 && quizzs.length === 0) {
-            const infoDiapo = await InfoDiapo.findById(element);
+            const infoDiapo = await InfoDiapo.findById(element)
             if(infoDiapo) {
-              await InfoDiapo.remove({ _id: infoDiapo._id });
+              await InfoDiapo.remove({ _id: infoDiapo._id })
               deleteDiapo = true
             }
           }
         }
       }
       if(deleteDiapo) {
-        await Diapo.remove({ _id: req.params.diapoId });
+        await Diapo.remove({ _id: req.params.diapoId })
       }
-    return res.status(200).json({ message: "diapo delete" });
+    return res.status(200).json({ message: "diapo delete" })
   } catch (e) {
-    console.log(e);
-    return res.status(500).json(e);
+    console.log(e)
+    return res.status(500).json(e)
   }
-};
+}
 
 module.exports = {
   addFile,
@@ -176,4 +175,4 @@ module.exports = {
   getFileByDiapoId,
   switchParamsDiapo,
   deleteFile,
-};
+}
