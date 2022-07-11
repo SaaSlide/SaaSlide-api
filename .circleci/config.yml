@@ -17,7 +17,6 @@ jobs:
       - node/install:
           install-yarn: true
       - run:
-        name: Install nvm
         command: |
           curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
           echo 'export NVM_DIR=$HOME/.nvm' >> $BASH_ENV
