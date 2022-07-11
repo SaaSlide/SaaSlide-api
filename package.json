@@ -15,7 +15,7 @@
     "prettier": "prettier --check \"**/*.js\"",
     "prettier:fix": "prettier --write \"**/*.js\"",
     "docker": "docker-compose up",
-    "test": "mocha 'src/test/*.js' --exit --require mocha-suppress-logs"
+    "test": "mocha 'src/test/*.js' --exit"
   },
   "repository": {
     "type": "git",

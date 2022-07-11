@@ -17,6 +17,12 @@ jobs:
       - node/install:
           install-yarn: true
       - run: node --version
+  Unit-test:
+    steps:
+      - run:
+          name: Units-test
+          command: |
+            yarn run test
 orbs:
   node: circleci/node@4.0.1
 version: 2.1
@@ -25,3 +31,4 @@ workflows:
     jobs:
       - Hello-Saaslide
       - Install-node-example
+      - Unit-test
