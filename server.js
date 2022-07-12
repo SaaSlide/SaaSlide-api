@@ -1,7 +1,6 @@
 const express = require("express")
 const cors = require("cors")
 const morgan = require("morgan")
-const helmet = require("helmet")
 const figlet = require("figlet")
 const bodyParser = require("body-parser")
 const process = require("process")
@@ -12,6 +11,11 @@ const { Server } = require("socket.io")
 const winston = require("./src/config/winston.js")
 const { send } = require("process")
 
+
+const swaggerUi = require('swagger-ui-express'),
+swaggerDocument = require('./swagger.json')
+
+
 require("dotenv").config()
 
 // set port, listen for requestsxs
@@ -20,6 +24,7 @@ const SOCKET_PORT = process.env.SOCKET_PORT
 const FRONT_URL = process.env.FRONT_URL
 
 const app = express()
+
 
 // Server socket io
 const httpServer = createServer(app)
@@ -49,7 +54,7 @@ io.on("connection", (socket) => {
    */
   const sender = (action, data) => {
     socket.broadcast.to(socket.data.room).emit(action, data)
-  };
+  }
 
   socket.on("update_slide", (data) => sender("get_slide", data))
 
@@ -74,6 +79,7 @@ io.on("connection", (socket) => {
 })
 
 
+// eslint-disable-next-line no-undef
 app.use("/public", express.static(__dirname + "/public"))
 // enable cors
 app.options(FRONT_URL, cors())
@@ -94,8 +100,11 @@ app.use(express.urlencoded({ extended: true }))
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
 
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+
 require("./src/models/db")
 require("./src/routes/routes.js")(app)
+
 
 app.listen(PORT, () => {
   figlet(
@@ -107,11 +116,11 @@ app.listen(PORT, () => {
       width: 180,
       whitespaceBreak: false,
     },
-    function (err, data) {
+    function (err) {
       if (err) {
         console.log("Something went wrong...")
         console.dir(err)
-        return;
+        return
       }
       console.log(`Server is running on port ${PORT}.`)
       httpServer.listen(SOCKET_PORT, () => {

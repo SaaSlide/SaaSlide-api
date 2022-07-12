@@ -6,6 +6,8 @@ var jwtUtils = require("../../utils/jwt.utils.js")
 const register = async (req, res) => {
   let { name, mail, password } = req.body
 
+  console.log('prout', name, mail, password)
+
   if (!name || !mail || !password) {
     return res.status(400).json({ message: "missing name, mail or password" })
   }

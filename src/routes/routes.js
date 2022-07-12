@@ -10,12 +10,6 @@ module.exports = (app) => {
   const quizzController = require("../controllers/quizz/quizz.controller.js")
   const noteController = require("../controllers/note/note.controller.js")
 
-  const swaggerUi = require("swagger-ui-express")
-
-  const swaggerDocs = require('../apiDoc/apiDoc')
-
-  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
-
   /**
    * TEST API
    */
@@ -34,6 +28,17 @@ module.exports = (app) => {
    */
   /* checks if the API is well secured by a bearer Token */
   app.use("/api/", verifyToken)
+
+
+  /**
+   * @swagger
+   * /auth/register:
+   *  get:
+   *    description: Register
+   *    responses:
+   *    200:
+   *      description: Success
+   */
 
   /**
    * AUTH

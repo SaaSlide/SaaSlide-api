@@ -1,0 +1,54 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API SAASLIDE",
+    "description": "Documentation api saaslide"
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Authentification"],
+        "summary": "Register",
+        "parameters": [
+          {
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "message": "create"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Register": {
+      "properties": {
+        "mail": {
+          "type": "string",
+          "example" :"John1@gmail.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "John1"
+        },
+        "password": {
+          "type": "string",
+          "example": "JohnPassword1"
+        }
+      }
+    }
+  }
+}
