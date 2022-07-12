@@ -18,6 +18,7 @@
         "summary": "Register",
         "parameters": [
           {
+            "name": "Register",
             "in": "body",
             "schema": {
               "$ref": "#/definitions/Register"
@@ -27,7 +28,28 @@
         "produces": ["application/json"],
         "responses": {
           "200": {
-            "message": "create"
+            "message": "register"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentification"],
+        "summary": "Login",
+        "parameters": [
+          {
+            "name": "Login",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "message": "login"
           }
         }
       }
@@ -38,15 +60,27 @@
       "properties": {
         "mail": {
           "type": "string",
-          "example" :"John1@gmail.com"
+          "example": "John10@gmail.com"
         },
         "name": {
           "type": "string",
-          "example": "John1"
+          "example": "John10"
         },
         "password": {
           "type": "string",
-          "example": "JohnPassword1"
+          "example": "JohnPassword10"
+        }
+      }
+    },
+    "Login": {
+      "properties": {
+        "mail": {
+          "type": "string",
+          "example": "John10@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "JohnPassword10"
         }
       }
     }
