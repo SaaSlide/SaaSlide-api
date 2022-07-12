@@ -10,12 +10,24 @@ module.exports = (app) => {
   const quizzController = require("../controllers/quizz/quizz.controller.js")
   const noteController = require("../controllers/note/note.controller.js")
 
+  const swaggerUi = require("swagger-ui-express")
+
+  const swaggerDocs = require('../apiDoc/apiDoc')
+
+  app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
   /**
    * TEST API
    */
   app.get("/", (req, res) => {
     res.send("Welcome to the jungle of the SaaSlide API.")
   })
+
+  /**
+   * API VERIFY REQUETE
+   */
+  /* checks if the API is well secured by a bearer Token */
+ 
 
   /**
    * API VERIFY REQUETE
