@@ -53,6 +53,36 @@
           }
         }
       }
+    },
+    "/api/user": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Get Current User",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "message": "Get Current User"
+          },
+          "security": [
+              {
+                  "bearerAuth":[]
+              }
+          ]
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+        "User":["User"]
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
   },
   "definitions": {
