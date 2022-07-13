@@ -5,10 +5,20 @@ const InfoDiapo = mongoose.model("infodiapo")
 const createSurvey = async (req, res) => {
   const { name, survey } = req.body
   const { pageId } = req.params
+
+  const tableOfSurvey = []
+
+  for (const element of survey) {
+    let object = {}
+    const { proposition } = element
+    object.proposition = proposition
+    tableOfSurvey.push(object)
+  }
+
   const newSurvey = new Survey({
     name,
-    survey,
-    count: 0
+    survey: tableOfSurvey,
+    count: 0,
   })
 
   try {
@@ -21,7 +31,7 @@ const createSurvey = async (req, res) => {
       {
         path: "surveys",
         model: "survey",
-        select: "_id name survey count",
+        select: "_id name survey",
       },
     ])
     return res.status(200).json(data.surveys.slice(-1).pop())
@@ -40,7 +50,7 @@ const getSurvey = async (req, res) => {
         {
           path: "surveys",
           model: "survey",
-          select: "_id name survey count",
+          select: "_id name survey",
         },
       ])
     return res.status(200).json(data)
@@ -53,14 +63,15 @@ const getSurvey = async (req, res) => {
 const updateSurvey = async (req, res) => {
   const { surveyId } = req.params
 
-  let { name, survey, count } = req.body
+  let { name, proposition, count } = req.body
   const updates = {}
+  const otherUpdates = {} 
 
   if (name?.length) {
-    updates.name = name
+    otherUpdates.name = name
   }
-  if (survey?.length) {
-    updates.survey = survey
+  if (proposition?.length) {
+    updates.proposition = proposition
   }
 
   if (count) {
@@ -68,15 +79,25 @@ const updateSurvey = async (req, res) => {
   }
 
   try {
-    const data = await Survey.findByIdAndUpdate(surveyId, updates)
-    const newSurvey = {
-      _id: surveyId ? surveyId : data._id,
-      name: updates.name ? updates.name: data.name,
-      survey: updates.survey ? updates.survey: data.survey,
-      count: updates.count ? updates.count : data.count
+    const data = await Survey.findByIdAndUpdate(surveyId, otherUpdates)
+    for (const element of data.survey) {
+      if (req.params.elementSurveyId === element._id.toString()) {
+        await Survey.update(
+          { "survey._id": req.params.elementSurveyId },
+          {
+            $set: {
+              "survey.$.proposition": updates.proposition
+                ? updates.proposition
+                : element.proposition,
+              "survey.$.count": updates.count ? updates.count : element.count,
+            },
+          }
+        )
+      }
     }
-    return res.status(200).json(newSurvey)
+    return res.status(200).json({message: "updates survey"})
   } catch (e) {
+    console.log(e)
     return res.status(500).json(e)
   }
 }
@@ -90,7 +111,6 @@ const deleteSurvey = async (req, res) => {
   } catch (e) {
     return res.status(500).json(e)
   }
-
 }
 
-module.exports = { createSurvey, getSurvey,updateSurvey, deleteSurvey }
+module.exports = { createSurvey, getSurvey, updateSurvey, deleteSurvey }
