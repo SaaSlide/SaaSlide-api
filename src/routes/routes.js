@@ -21,7 +21,24 @@ module.exports = (app) => {
    * API VERIFY REQUETE
    */
   /* checks if the API is well secured by a bearer Token */
+ 
+
+  /**
+   * API VERIFY REQUETE
+   */
+  /* checks if the API is well secured by a bearer Token */
   app.use("/api/", verifyToken)
+
+
+  /**
+   * @swagger
+   * /auth/register:
+   *  get:
+   *    description: Register
+   *    responses:
+   *    200:
+   *      description: Success
+   */
 
   /**
    * AUTH

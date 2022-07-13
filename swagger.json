@@ -1,0 +1,88 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API SAASLIDE",
+    "description": "Documentation api saaslide"
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Authentification"],
+        "summary": "Register",
+        "parameters": [
+          {
+            "name": "Register",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Register"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "message": "register"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentification"],
+        "summary": "Login",
+        "parameters": [
+          {
+            "name": "Login",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Login"
+            }
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "message": "login"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Register": {
+      "properties": {
+        "mail": {
+          "type": "string",
+          "example": "John10@gmail.com"
+        },
+        "name": {
+          "type": "string",
+          "example": "John10"
+        },
+        "password": {
+          "type": "string",
+          "example": "JohnPassword10"
+        }
+      }
+    },
+    "Login": {
+      "properties": {
+        "mail": {
+          "type": "string",
+          "example": "John10@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "JohnPassword10"
+        }
+      }
+    }
+  }
+}
