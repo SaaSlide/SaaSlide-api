@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:18-alpine
 
 RUN apk add graphicsmagick imagemagick \
     && yarn global add nodemon
