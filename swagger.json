@@ -235,7 +235,7 @@
         }
       }
     },
-    "/api/survey/:surveyId/:elementSurveyId": {
+    "/api/survey/:surveyId": {
       "put": {
         "tags": ["Survey"],
         "summary": "Update survey by surveyId and elementSurveyId",
@@ -250,9 +250,7 @@
             "message": "Get survey by surveyId and elementSurveyId"
           }
         }
-      }
-    },
-    "/api/survey/:surveyId": {
+      },
       "delete": {
         "tags": ["Survey"],
         "summary": "Delete survey by surveyId",
@@ -301,7 +299,7 @@
         }
       }
     },
-    "/api/quizz/:quizzId/:elementQuizzId": {
+    "/api/quizz/:quizzId": {
       "put": {
         "tags": ["Quizz"],
         "summary": "Update quizz by quizzId and elementQuizzId",
@@ -316,9 +314,7 @@
             "message": "Get quizz by quizzId and elementQuizzId"
           }
         }
-      }
-    },
-    "/api/quizz/:quizzId": {
+      },
       "delete": {
         "tags": ["Quizz"],
         "summary": "Delete quizz by quizzId",

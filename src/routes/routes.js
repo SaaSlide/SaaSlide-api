@@ -59,7 +59,7 @@ module.exports = (app) => {
    */
   app.get("/api/survey/:pageId", surveyController.getSurvey)
   app.post("/api/survey/:pageId", surveyController.createSurvey)
-  app.put("/api/survey/:surveyId/:elementSurveyId", surveyController.updateSurvey)
+  app.put("/api/survey/:surveyId", surveyController.updateSurvey)
   app.delete("/api/survey/:surveyId", surveyController.deleteSurvey)
 
   /**
@@ -67,7 +67,7 @@ module.exports = (app) => {
    */
   app.get("/api/quizz/:pageId", quizzController.getQuizz)
   app.post("/api/quizz/:pageId", quizzController.createQuizz)
-  app.put("/api/quizz/:quizzId/:elementQuizzId", quizzController.updateQuizz)
+  app.put("/api/quizz/:quizzId", quizzController.updateQuizz)
   app.delete("/api/quizz/:quizzId", quizzController.deleteQuizz)
 
   /**
