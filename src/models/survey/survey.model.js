@@ -5,7 +5,7 @@ let SurveySchema = new Schema({
   name: { type: String },
   survey: [
     {
-      proposition: { type: String },
+      proposition: String,
       count: {
         type: Number,
         default: 0,

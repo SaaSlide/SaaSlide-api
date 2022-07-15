@@ -63,15 +63,14 @@ const getSurvey = async (req, res) => {
 const updateSurvey = async (req, res) => {
   const { surveyId } = req.params
 
-  let { name, proposition, count } = req.body
+  let { name, survey, count } = req.body
   const updates = {}
-  const otherUpdates = {}
 
   if (name?.length) {
-    otherUpdates.name = name
+    updates.name = name
   }
-  if (proposition?.length) {
-    updates.proposition = proposition
+  if (survey?.length) {
+    updates.survey = survey
   }
 
   if (count) {
@@ -79,21 +78,15 @@ const updateSurvey = async (req, res) => {
   }
 
   try {
-    const data = await Survey.findByIdAndUpdate(surveyId, otherUpdates)
-    for (const element of data.survey) {
-      if (req.params.elementSurveyId === element._id.toString()) {
-        await Survey.update(
-          { "survey._id": req.params.elementSurveyId },
-          {
-            $set: {
-              "survey.$.proposition": updates.proposition ? updates.proposition : element.proposition,
-              "survey.$.count": updates.count ? updates.count : element.count,
-            },
-          }
-        )
-      }
+    await Survey.findByIdAndUpdate(surveyId, updates)
+    const data = await Survey.findByIdAndUpdate(surveyId, updates)
+    const newSurvey = {
+      _id: surveyId ? surveyId : data._id,
+      name: updates.name ? updates.name : data.name,
+      survey: updates.survey ? updates.survey : data.survey,
+      count: updates.count ? updates.count : data.count,
     }
-    return res.status(200).json({ message: "updates survey" })
+    return res.status(200).json(newSurvey)
   } catch (e) {
     console.log(e)
     return res.status(500).json(e)
