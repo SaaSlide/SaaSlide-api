@@ -12,7 +12,6 @@ const { fromPath } = require("pdf2pic")
 // eslint-disable-next-line no-unused-vars
 const pdf = require("pdf-page-counter")
 
-
 global.app = app
 global.request = supertest(app)
 

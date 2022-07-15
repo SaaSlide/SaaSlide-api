@@ -6,8 +6,6 @@ var jwtUtils = require("../../utils/jwt.utils.js")
 const register = async (req, res) => {
   let { name, mail, password } = req.body
 
-  console.log('prout', name, mail, password)
-
   if (!name || !mail || !password) {
     return res.status(400).json({ message: "missing name, mail or password" })
   }
@@ -39,18 +37,16 @@ const login = async (req, res) => {
     return res.status(400).json({ error: "missing parameters" })
   }
 
-
   // tokenUser, tokenJWT, gérer la date, domain
-
 
   try {
     const data = await User.findOne({ mail: mail })
     if (data) {
       bcrypt.compare(password, data.password, async (err, response) => {
-        if(response){
+        if (response) {
           try {
             let token = jwtUtils.generateTokenForUser(data)
-            res.cookie('cookieUser', token, {
+            res.cookie("cookieUser", token, {
               maxAge: 1000 * 60 * 60 * 24,
               // httpOnly: true, // cookie par récupèrable par un script js
               // secure: true, // var env prod si http
@@ -65,8 +61,8 @@ const login = async (req, res) => {
           } catch (e) {
             return res.status(400).json("Oups ! error T_T")
           }
-        }else {
-          return res.status(400).json({ error: "invalid password"})
+        } else {
+          return res.status(400).json({ error: "invalid password" })
         }
       })
     } else {

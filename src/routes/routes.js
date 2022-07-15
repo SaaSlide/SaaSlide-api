@@ -1,7 +1,5 @@
 module.exports = (app) => {
-  const {
-    verifyToken,
-  } = require("../controllers/token/verifyToken.controller.js")
+  const { verifyToken } = require("../controllers/token/verifyToken.controller.js")
   const multer = require("../utils/multer.utils.js")
   const authController = require("../controllers/auth/auth.controller.js")
   const userController = require("../controllers/user/user.controller.js")
@@ -21,24 +19,7 @@ module.exports = (app) => {
    * API VERIFY REQUETE
    */
   /* checks if the API is well secured by a bearer Token */
- 
-
-  /**
-   * API VERIFY REQUETE
-   */
-  /* checks if the API is well secured by a bearer Token */
   app.use("/api/", verifyToken)
-
-
-  /**
-   * @swagger
-   * /auth/register:
-   *  get:
-   *    description: Register
-   *    responses:
-   *    200:
-   *      description: Success
-   */
 
   /**
    * AUTH
@@ -47,12 +28,12 @@ module.exports = (app) => {
   app.post("/auth/login", authController.login)
 
   /*
-  * COOKIE
-  */
-  app.get('/delete-cookie', (req, res) => {
+   * COOKIE
+   */
+  app.get("/delete-cookie", (req, res) => {
     const cookies = req.cookies
-    if(cookies.cookieUser) {
-      res.clearCookie('cookieUser')
+    if (cookies.cookieUser) {
+      res.clearCookie("cookieUser")
       return res.status(200).json("Cookie was delete")
     }
   })

@@ -4,14 +4,14 @@ const Schema = mongoose.Schema
 let QuizzSchema = new Schema({
   question: { type: String },
   possibilities: [
-    { 
-      choice: String, 
-      answer: Boolean, 
+    {
+      choice: String,
+      answer: Boolean,
       count: {
         type: Number,
         default: 0,
-      }
-    }
+      },
+    },
   ],
 })
 

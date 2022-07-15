@@ -14,6 +14,7 @@ const verifyToken = async (req, res, next) => {
   let token = extractToken(req)
   token = jwtUtils.parseAuthorization(token)
 
+  // eslint-disable-next-line security/detect-possible-timing-attacks
   if (token != null) {
     try {
       // eslint-disable-next-line no-undef
@@ -25,8 +26,7 @@ const verifyToken = async (req, res, next) => {
     } catch (err) {
       return res.status(400).json({ message: "jwt malformed" })
     }
-  }
-  else {
+  } else {
     return res.status(400).json({ message: "No token" })
   }
 }

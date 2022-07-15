@@ -12,11 +12,7 @@ const createNote = async (req, res) => {
 
   try {
     await newNote.save()
-    const data = await InfoDiapo.findByIdAndUpdate(
-      pageId,
-      { $push: { notes: newNote.id } },
-      { new: true }
-    ).populate([
+    const data = await InfoDiapo.findByIdAndUpdate(pageId, { $push: { notes: newNote.id } }, { new: true }).populate([
       {
         path: "notes",
         model: "note",
@@ -53,6 +49,7 @@ const updateNote = async (req, res) => {
 
   let { description } = req.body
   const updates = {}
+
   if (description?.length) {
     updates.description = description
   }

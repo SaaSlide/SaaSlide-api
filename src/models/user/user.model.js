@@ -5,8 +5,8 @@ let UserSchema = new Schema({
   name: { type: String },
   mail: { type: String, unique: true },
   password: { type: String },
-  picture: { type: String, required: false},
-  isAdmin: { type: Boolean, default: false},
+  picture: { type: String, required: false },
+  isAdmin: { type: Boolean, default: false },
   diaposUser: [
     {
       type: Schema.Types.ObjectId,

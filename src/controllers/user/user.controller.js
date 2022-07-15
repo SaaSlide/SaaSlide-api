@@ -30,7 +30,7 @@ const updateProfileCurrentUser = async (req, res) => {
   if (password?.length) {
     updates.password = password
   }
-  
+
   try {
     await User.findByIdAndUpdate(req.userId, updates)
     return res.status(200).json({ message: "update profile" })

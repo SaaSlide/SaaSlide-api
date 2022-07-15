@@ -23,6 +23,7 @@ const getUserId = (authorization) => {
   // eslint-disable-next-line no-undef
   userData = -1
   var token = module.exports.parseAuthorization(authorization)
+  // eslint-disable-next-line security/detect-possible-timing-attacks
   if (token != null) {
     try {
       var jwtToken = jwt.verify(token, JWT_SIGN_SECRET)

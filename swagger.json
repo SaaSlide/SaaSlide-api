@@ -11,6 +11,16 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
 
+  "securitySchemes": {
+    "ApiKeyAuth": {
+      "type": "http",
+      "in": "header",
+      "name": "Authorization",
+      "scheme": "bearer",
+      "bearerFormat": "JWT",
+      "description": "JWT"
+    }
+  },
   "paths": {
     "/auth/register": {
       "post": {
@@ -54,27 +64,345 @@
         }
       }
     },
-    "/api/user": {
-      "post": {
-        "tags": ["User"],
-        "summary": "Get Current User",
+    "/delete-cookie": {
+      "delete": {
+        "tags": ["Cookie"],
+        "summary": "Delete cookie",
         "produces": ["application/json"],
         "responses": {
           "200": {
+            "message": "Cookie was deleted"
+          }
+        }
+      }
+    },
+    "/api/user": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get Current User",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
             "message": "Get Current User"
-          },
-          "security": [
-              {
-                  "bearerAuth":[]
-              }
-          ]
+          }
+        }
+      },
+      "delete": {
+        "tags": ["User"],
+        "summary": "Delete Current User",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Delete current user"
+          }
+        }
+      }
+    },
+    "/api/user/profile": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Update profile Current User",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Profile Update"
+          }
+        }
+      }
+    },
+    "/api/diapo": {
+      "post": {
+        "tags": ["Diapo"],
+        "summary": "Import diapo",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Import diapo was successful"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Diapo"],
+        "summary": "get all diapo",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "get all diapo"
+          }
+        }
+      }
+    },
+    "/diapo/:diapoId": {
+      "get": {
+        "tags": ["Diapo"],
+        "summary": "get diapo by id",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "message": "get diapo by id"
+          }
+        }
+      }
+    },
+    "/api/diapo/params/:diapoId": {
+      "put": {
+        "tags": ["Diapo"],
+        "summary": "Switch params for diapo",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Switch params for diapo"
+          }
+        }
+      }
+    },
+    "/api/diapo/:diapoId": {
+      "delete": {
+        "tags": ["Diapo"],
+        "summary": "Delete diapo by idDiapo",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Delete diapo by idDiapo"
+          }
+        }
+      }
+    },
+    "/api/survey/:pageId": {
+      "get": {
+        "tags": ["Survey"],
+        "summary": "Get survey by pageId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Get survey by pageId"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Survey"],
+        "summary": "Create survey by pageId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Create survey by pageId"
+          }
+        }
+      }
+    },
+    "/api/survey/:surveyId/:elementSurveyId": {
+      "put": {
+        "tags": ["Survey"],
+        "summary": "Update survey by surveyId and elementSurveyId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Get survey by surveyId and elementSurveyId"
+          }
+        }
+      }
+    },
+    "/api/survey/:surveyId": {
+      "delete": {
+        "tags": ["Survey"],
+        "summary": "Delete survey by surveyId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Delete survey by surveyId"
+          }
+        }
+      }
+    },
+    "/api/quizz/:pageId": {
+      "get": {
+        "tags": ["Quizz"],
+        "summary": "Get quizz by pageId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Get quizz by pageId"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Quizz"],
+        "summary": "Create quizz by pageId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Create quizz by pageId"
+          }
+        }
+      }
+    },
+    "/api/quizz/:quizzId/:elementQuizzId": {
+      "put": {
+        "tags": ["Quizz"],
+        "summary": "Update quizz by quizzId and elementQuizzId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Get quizz by quizzId and elementQuizzId"
+          }
+        }
+      }
+    },
+    "/api/quizz/:quizzId": {
+      "delete": {
+        "tags": ["Quizz"],
+        "summary": "Delete quizz by quizzId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Delete quizz by quizzId"
+          }
+        }
+      }
+    },
+    "/api/note/:pageId": {
+      "get": {
+        "tags": ["Note"],
+        "summary": "Get note by pageId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Get note by pageId"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Note"],
+        "summary": "Create note by pageId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Create note by pageId"
+          }
+        }
+      }
+    },
+    "/api/note/:noteId": {
+      "put": {
+        "tags": ["Note"],
+        "summary": "Update note by noteId and elementNoteId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Get note by noteId and elementNoteId"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Note"],
+        "summary": "Delete note by noteId",
+        "produces": ["application/json"],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "message": "Delete note by noteId"
+          }
         }
       }
     }
   },
   "components": {
     "schemas": {
-        "User":["User"]
+      "User": ["User"]
     },
     "securitySchemes": {
       "bearerAuth": {

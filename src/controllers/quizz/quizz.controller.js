@@ -16,21 +16,15 @@ const createQuizz = async (req, res) => {
     tableOfQuizz.push(object)
   }
 
-
   const newQuizz = new Quizz({
     question,
     possibilities: tableOfQuizz,
-    count: 0
+    count: 0,
   })
-
 
   try {
     await newQuizz.save()
-    const data = await InfoDiapo.findByIdAndUpdate(
-      pageId,
-      { $push: { quizzs: newQuizz.id } },
-      { new: true }
-    ).populate([
+    const data = await InfoDiapo.findByIdAndUpdate(pageId, { $push: { quizzs: newQuizz.id } }, { new: true }).populate([
       {
         path: "quizzs",
         model: "quizz",
@@ -65,44 +59,29 @@ const getQuizz = async (req, res) => {
 const updateQuizz = async (req, res) => {
   const { quizzId } = req.params
 
-  let { question, choice, answer, count } = req.body
+  let { question, possibilities, count } = req.body
   const updates = {}
-  const otherUpdates = {} 
 
   if (question?.length) {
     otherUpdates.question = question
   }
-  if (choice?.length) {
-    updates.choice = choice
-  }
-  if (answer?.length) {
-    updates.answer = answer
+  if (possibilities?.length) {
+    updates.possibilities = possibilities
   }
   if (count) {
     updates.count = count
   }
 
   try {
-    const data = await Quizz.findByIdAndUpdate(quizzId, otherUpdates)
-    for (const element of data.possibilities) {
-      if (req.params.elementQuizzId === element._id.toString()) {
-        await Quizz.update(
-          { "possibilities._id": req.params.elementQuizzId },
-          {
-            $set: {
-              "possibilities.$.choice": updates.choice
-                ? updates.choice
-                : element.choice,
-              "possibilities.$.answer": updates.answer
-                ? updates.answer
-                : element.answer,
-              "possibilities.$.count": updates.count ? updates.count : element.count,
-            },
-          }
-        )
-      }
+    await Quizz.findByIdAndUpdate(quizzId, updates)
+    const data = await Quizz.findByIdAndUpdate(quizzId, updates)
+    const newQuizz = {
+      _id: quizzId ? quizzId : data._id,
+      question: updates.question ? updates.question : data.question,
+      possibilities: updates.possibilities ? updates.possibilities : data.possibilities,
+      count: updates.count ? updates.count : data.count,
     }
-    return res.status(200).json({message: "updates quizz"})
+    return res.status(200).json(newQuizz)
   } catch (e) {
     return res.status(500).json(e)
   }

@@ -65,7 +65,7 @@ const updateSurvey = async (req, res) => {
 
   let { name, proposition, count } = req.body
   const updates = {}
-  const otherUpdates = {} 
+  const otherUpdates = {}
 
   if (name?.length) {
     otherUpdates.name = name
@@ -86,16 +86,14 @@ const updateSurvey = async (req, res) => {
           { "survey._id": req.params.elementSurveyId },
           {
             $set: {
-              "survey.$.proposition": updates.proposition
-                ? updates.proposition
-                : element.proposition,
+              "survey.$.proposition": updates.proposition ? updates.proposition : element.proposition,
               "survey.$.count": updates.count ? updates.count : element.count,
             },
           }
         )
       }
     }
-    return res.status(200).json({message: "updates survey"})
+    return res.status(200).json({ message: "updates survey" })
   } catch (e) {
     console.log(e)
     return res.status(500).json(e)

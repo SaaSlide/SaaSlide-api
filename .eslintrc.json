@@ -1,0 +1,17 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true
+  },
+  "extends": ["plugin:security/recommended", "plugin:prettier/recommended"],
+  "plugins": ["security", "prettier"],
+  "parserOptions": {
+    "ecmaVersion": 12,
+    "sourceType": "module",
+    "allowImportExportEverywhere": true
+  },
+  "rules": {
+    "semi": ["warn", "never"],
+    "quotes": ["warn", "double"]
+  }
+}

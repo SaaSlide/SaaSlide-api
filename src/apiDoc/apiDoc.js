@@ -6,19 +6,17 @@ const swaggerOptions = {
     info: {
       title: "SaaSlide Api",
       version: "1.0.0",
-      description: "Documentation SaaSlide Api"
+      description: "Documentation SaaSlide Api",
     },
     servers: [
-        {
-            url: "http://localhost:4000"
-        }
-    ]
+      {
+        url: "http://localhost:4000",
+      },
+    ],
   },
   apis: ["./routes/*.js"],
 }
 
-
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
-
 
 module.exports = swaggerDocs
