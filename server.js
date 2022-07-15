@@ -49,21 +49,25 @@ io.on("connection", (socket) => {
    * @param {string} action
    * @param {*} data
    */
-  const sender = (action, data) => {
-    socket.broadcast.to(socket.data.room).emit(action, data)
-  };
+  const sender = (action, data, room) => {
+    socket.broadcast.to(room).emit(action, data)
+  }
 
-  socket.on("update_slide", (data) => sender("get_slide", data))
-
-  socket.on("send_question", (data) => sender("get_question", data))
-
-  socket.on("send_params", (data) => sender("get_params", data))
-
-  socket.on("send_response", (data) => sender("get_response", data))
-
-  socket.on("send_smiley", (data) =>
-    io.in(socket.data.room).emit("get_smiley", data)
+  socket.on("update_slide", ({ room, action, value, prevSlide }) =>
+    sender("get_slide", { action, value, prevSlide }, room)
   )
+
+  socket.on("send_question", ({ room, pseudo, question }) => sender("get_question", { pseudo, question }, room))
+
+  socket.on("send_params", ({ room, slide, type, id, display, open }) =>
+    sender("get_params", { slide, type, id, display, open }, room)
+  )
+
+  socket.on("send_response", ({ room, slide, type, id, choice }) =>
+    sender("get_response", { slide, type, id, choice }, room)
+  )
+
+  socket.on("send_smiley", ({ room, smiley }) => io.in(socket.data.room).emit("get_smiley", smiley, room))
 
   socket.on("disconnecting", () => {
     for (const room of socket.rooms) {
@@ -117,7 +121,7 @@ app.listen(PORT, () => {
       if (err) {
         console.log("Something went wrong...")
         console.dir(err)
-        return;
+        return
       }
       console.log(`Server is running on port ${PORT}.`)
       httpServer.listen(SOCKET_PORT, () => {
