@@ -63,28 +63,25 @@ const getSurvey = async (req, res) => {
 const updateSurvey = async (req, res) => {
   const { surveyId } = req.params
 
-  let { name, survey, count } = req.body
-  const updates = {}
+  let { name, survey } = req.body
+  const updates = {
+    survey: {},
+  }
+
+  if (survey) {
+    updates.survey = survey
+  }
 
   if (name?.length) {
     updates.name = name
   }
-  if (survey?.length) {
-    updates.survey = survey
-  }
-
-  if (count) {
-    updates.count = count
-  }
 
   try {
-    await Survey.findByIdAndUpdate(surveyId, updates)
     const data = await Survey.findByIdAndUpdate(surveyId, updates)
     const newSurvey = {
       _id: surveyId ? surveyId : data._id,
       name: updates.name ? updates.name : data.name,
       survey: updates.survey ? updates.survey : data.survey,
-      count: updates.count ? updates.count : data.count,
     }
     return res.status(200).json(newSurvey)
   } catch (e) {

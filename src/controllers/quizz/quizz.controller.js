@@ -59,30 +59,28 @@ const getQuizz = async (req, res) => {
 const updateQuizz = async (req, res) => {
   const { quizzId } = req.params
 
-  let { question, possibilities, count } = req.body
-  const updates = {}
-
-  if (question?.length) {
-    otherUpdates.question = question
+  let { question, possibilities } = req.body
+  const updates = {
+    possibilities: {},
   }
-  if (possibilities?.length) {
+
+  if (possibilities) {
     updates.possibilities = possibilities
   }
-  if (count) {
-    updates.count = count
+  if (question?.length) {
+    updates.question = question
   }
 
   try {
-    await Quizz.findByIdAndUpdate(quizzId, updates)
     const data = await Quizz.findByIdAndUpdate(quizzId, updates)
     const newQuizz = {
-      _id: quizzId ? quizzId : data._id,
+      _id: quizzId ? quizzId : data.quizzId,
       question: updates.question ? updates.question : data.question,
       possibilities: updates.possibilities ? updates.possibilities : data.possibilities,
-      count: updates.count ? updates.count : data.count,
     }
     return res.status(200).json(newQuizz)
   } catch (e) {
+    console.log(e)
     return res.status(500).json(e)
   }
 }

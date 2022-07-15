@@ -238,7 +238,7 @@
     "/api/survey/:surveyId": {
       "put": {
         "tags": ["Survey"],
-        "summary": "Update survey by surveyId and elementSurveyId",
+        "summary": "Update survey by surveyId",
         "produces": ["application/json"],
         "security": [
           {
@@ -247,7 +247,7 @@
         ],
         "responses": {
           "200": {
-            "message": "Get survey by surveyId and elementSurveyId"
+            "message": "Get survey by surveyId"
           }
         }
       },
@@ -302,7 +302,7 @@
     "/api/quizz/:quizzId": {
       "put": {
         "tags": ["Quizz"],
-        "summary": "Update quizz by quizzId and elementQuizzId",
+        "summary": "Update quizz by quizzId",
         "produces": ["application/json"],
         "security": [
           {
@@ -311,7 +311,7 @@
         ],
         "responses": {
           "200": {
-            "message": "Get quizz by quizzId and elementQuizzId"
+            "message": "Get quizz by quizzId"
           }
         }
       },
