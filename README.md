@@ -1,21 +1,20 @@
-# SAASLIDE - API
+# Comment lancer le back ?
 
-# Install the project 
+Clone la branche main et lancer votre docker
 
-- yarn install
+A la racine créer un .env
 
-# RUN project local
+- `NAME_APP=SAASLIDE`
+- `PORT=4000`
+- `SOCKET_PORT=4001`
+- `FRONT_URL=http://localhost:3000`
+- `NAME_DB=lucasmoreno`
+- `PASSWORD_DB=lucasmoreno`
+- `JWT_SIGN_SECRET=iegzjpfp0993NjPDjdfjnjkzfjkzfnndond3D3JNdonnoD3D3`
+- `AWSAccessKeyId=AKIA3YK3WRKMVHVPWT5Y`
+- `AWSSecretKey=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`
+- `bucketName=saaslide-test-charles`
 
-- yarn run start:dev
+A la racine lancer le docker
 
-# RUN project with docker
-
-- yarn run docker
-
-# RUN Eslint
-
-- yarn run eslint
-
-# RUN Test
-
-- yarn run test
+### `docker-compose up --build`
