@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
    */
   const sender = (action, data) => {
     socket.broadcast.to(socket.data.room).emit(action, data)
-  };
+  }
 
   socket.on("update_slide", (data) => sender("get_slide", data))
 
@@ -61,9 +61,9 @@ io.on("connection", (socket) => {
 
   socket.on("send_response", (data) => sender("get_response", data))
 
-  socket.on("send_smiley", (data) =>
+  socket.on("send_smiley", (data) => {
     io.in(socket.data.room).emit("get_smiley", data)
-  )
+  })
 
   socket.on("disconnecting", () => {
     for (const room of socket.rooms) {
@@ -117,7 +117,7 @@ app.listen(PORT, () => {
       if (err) {
         console.log("Something went wrong...")
         console.dir(err)
-        return;
+        return
       }
       console.log(`Server is running on port ${PORT}.`)
       httpServer.listen(SOCKET_PORT, () => {
