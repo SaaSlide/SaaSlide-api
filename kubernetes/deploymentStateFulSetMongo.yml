@@ -1,26 +1,26 @@
-apiVersion: apps/v1
-kind: StatefulSet
+apiVersion: apps/v1 # Quel version de l'api j'utilise
+kind: StatefulSet # Quel type d'objet je créer
 metadata:
-  name: saaslide-db-statefulset
+  name: saaslide-db-statefulset # Permet d'identifier l'objet de manière unique
 spec:
-  serviceName: saaslide-db-service
-  replicas: 5
+  serviceName: saaslide-db-service # le StatefulSet demande un service pour pouvoir fonctionner
+  replicas: 5 # Nombre de réplicas pour cette objet
   selector:
     matchLabels:
-      app: saaslide-db
+      app: saaslide-db # Permet de classer les pods dans un label (pour les environments (dev, pre-prod, prod))
   template:
     metadata:
       labels:
-        app: saaslide-db
+        app: saaslide-db # Selectionner le label saaslide-api qui est dans le selector
     spec:
       containers:
-      - name: mongo
-        image: mongo
-        volumeMounts:
+      - name: mongo # Quel db
+        image: mongo # Quel image de db
+        volumeMounts: # l'endroit où les fichiers vont être stockés
         - mountPath: /data/db
           name: test-volume
         imagePullPolicy: IfNotPresent
-  volumeClaimTemplates:
+  volumeClaimTemplates: # Le volume alloué pour ce deploiement dans le pv on a 1gi si içi cela en demande moins cela en prendra moins
   - metadata:
       name: www
     spec:

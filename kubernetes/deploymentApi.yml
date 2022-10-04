@@ -1,26 +1,26 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: apps/v1 # Quel version de l'api j'utilise
+kind: Deployment # Quel type d'objet je créer
 metadata:
-  name: saaslide-api-deployment
+  name: saaslide-api-deployment # Permet d'identifier l'objet de manière unique
 spec:
-  replicas: 1
+  replicas: 1 # Nombre de réplicas pour cette objet
   strategy:
-    type: RollingUpdate
+    type: RollingUpdate # Permet de déployer les pods un par un (réplicas)
   selector:
     matchLabels:
-      app: saaslide-api
-  template:
+      app: saaslide-api # Permet de classer les pods dans un label (pour les environments (dev, pre-prod, prod))
+  template: # Dans le template il faut mettre une metadata pour pouvoir selectionner le bon label
     metadata:
       labels:
-        app: saaslide-api
-        version: "3"
+        app: saaslide-api # Selectionner le label saaslide-api qui est dans le selector
+        version: "6" # Quel version du pod
     spec:
       containers:
-      - name: nodeserver
+      - name: nodeserver # spec pour nodejs
         envFrom:
-          - configMapRef:
+          - configMapRef: # permet d'ajouter des configmap dans notre deployment
               name: uridb
-        image: lucasmoreno82/saaslide-api:latest
+        image: lucasmoreno82/saaslide-api:latest # Quel image est utilisé
         readinessProbe: 
           httpGet:
             path: /
@@ -37,4 +37,4 @@ spec:
           periodSeconds: 15
         imagePullPolicy: Always
         ports:
-        - containerPort: 4000
+        - containerPort: 4000 # Quel port local est utilisé
