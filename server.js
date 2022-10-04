@@ -21,7 +21,6 @@ const PORT = process.env.PORT
 const SOCKET_PORT = process.env.SOCKET_PORT
 const FRONT_URL = process.env.FRONT_URL
 
-console.log('hola')
 const app = express()
 
 // Server socket io

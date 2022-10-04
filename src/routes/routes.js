@@ -7,12 +7,30 @@ module.exports = (app) => {
   const surveyController = require("../controllers/survey/survey.controller.js")
   const quizzController = require("../controllers/quizz/quizz.controller.js")
   const noteController = require("../controllers/note/note.controller.js")
+  const mongoose = require("mongoose")
 
   /**
    * TEST API
    */
   app.get("/", (req, res) => {
     res.send("Welcome to the jungle of the SaaSlide API.")
+  })
+  app.get("/health", (req, res) => {
+    const uri = `mongodb+srv://${process.env.NAME_DB}:${process.env.PASSWORD_DB}@cluster0.bqizz.mongodb.net/saaslide-db?retryWrites=true&w=majority`
+    mongoose.connect(
+      uri,
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+      (err) => {
+        if (!err) {
+          res.send("MongoDB Connection Succeeded")
+        } else {
+          res.send("Error in db connection :" + err)
+        }
+      }
+    )
   })
 
   /**
