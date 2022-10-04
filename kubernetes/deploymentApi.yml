@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saaslide-api-deployment
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: saaslide-api
+  template:
+    metadata:
+      labels:
+        app: saaslide-api
+        version: "3"
+    spec:
+      containers:
+      - name: nodeserver
+        envFrom:
+          - configMapRef:
+              name: uridb
+        image: lucasmoreno82/saaslide-api:latest
+        readinessProbe: 
+          httpGet:
+            path: /
+            port: 4000
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 15
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 4000
+          initialDelaySeconds: 5
+          timeoutSeconds: 1
+          periodSeconds: 15
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4000

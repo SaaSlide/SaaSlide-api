@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: saaslide-db-statefulset
+spec:
+  serviceName: saaslide-db-service
+  replicas: 5
+  selector:
+    matchLabels:
+      app: saaslide-db
+  template:
+    metadata:
+      labels:
+        app: saaslide-db
+    spec:
+      containers:
+      - name: mongo
+        image: mongo
+        volumeMounts:
+        - mountPath: /data/db
+          name: test-volume
+        imagePullPolicy: IfNotPresent
+  volumeClaimTemplates:
+  - metadata:
+      name: www
+    spec:
+      accessModes:
+        - ReadWriteOnce
+      volumeMode: Filesystem
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: standard

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: saaslide-api-service
+spec:
+  selector:
+    app: saaslide-api
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 5000
+    targetPort: 4000
