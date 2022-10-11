@@ -20,6 +20,9 @@ jobs:
     env:
       GH_ACCESS_TOKEN: ${{ secrets.GITHUB_SECRET }}
       FRONT_URL: http://localhost:3000
+      JWT_SIGN_SECRET: ${{ secrets.JWT_SIGN_SECRET }}
+      PORT: 4000
+      SOCKET_PORT: 4001
       URI_DB: ${{ secrets.URI_DB }}
       NAME_DB: ${{ secrets.NAME_DB }}
       PASSWORD_DB: ${{ secrets.PASSWORD_DB }}
