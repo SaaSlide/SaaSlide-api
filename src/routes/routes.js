@@ -7,7 +7,7 @@ module.exports = (app) => {
   const surveyController = require("../controllers/survey/survey.controller.js")
   const quizzController = require("../controllers/quizz/quizz.controller.js")
   const noteController = require("../controllers/note/note.controller.js")
-  const mongoose = require("mongoose")
+  const mongoose = require("mongoose");
 
   /**
    * TEST API
