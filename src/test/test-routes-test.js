@@ -82,45 +82,6 @@ describe("/ENDPOINT :", () => {
         })
     })
   })
-  // describe("/DIAPO :", () => {
-  //   it("1) POST Diapo", () => {
-
-  //     const options = {
-  //       density: 100,
-  //       saveFilename: Date.now(),
-  //       savePath: "./src/test/testpPng",
-  //       format: "png",
-  //       width: 1920,
-  //       height: 1080,
-  //     };
-
-  //     let arrayOfPng = [];
-  //     const storeAsImage = fromPath(`./src/test/testPdf/testPdf.pdf`, options);
-  //     let dataBuffer = fs.readFileSync(`./src/test/testPdf/testPdf.pdf`);
-
-  //     chai
-  //     .request(app)
-  //     .post("/api/diapo")
-  //     .set("content-type", "multipart/form-data", {
-  //       Authorization: `Bearer ${token}`,
-  //     })
-  //     .send(dataBuffer)
-  //     .end((err, res) => {
-  //       console.log('hola', res)
-  //       // res.should.have.status(200);
-  //       // done();
-  //     });
-
-  //     console.log(res)
-  //   });
-  // });
-  //   const res = await chai
-  //     .request(app)
-  //     .post("/api/diapo")
-  //     .set("content-type", "multipart/form-data", {
-  //       Authorization: `Bearer ${token}`,
-  //     })
-  //   expect(res.status).to.equal(200);
   describe("/DELETE USER :", () => {
     it("1) DELETE Current User", (done) => {
       chai
