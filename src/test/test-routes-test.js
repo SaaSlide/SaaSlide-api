@@ -25,9 +25,9 @@ describe("/ENDPOINT :", () => {
   describe("/AUTHENTIFICATION :", () => {
     it("1) POST Register", (done) => {
       const account = {
-        mail: "lucastestmocha12@mail.com",
-        name: "lucastestmocha12",
-        password: "lucastestmocha12",
+        mail: "lucastestci@mail.com",
+        name: "lucastestci",
+        password: "lucastestci",
       }
       chai
         .request(app)
@@ -40,8 +40,8 @@ describe("/ENDPOINT :", () => {
     })
     it("2) POST Login", (done) => {
       const newLogin = {
-        mail: "lucastestmocha12@mail.com",
-        password: "lucastestmocha12",
+        mail: "lucastestci@mail.com",
+        password: "lucastestci",
       }
       chai
         .request(app)
@@ -66,8 +66,8 @@ describe("/ENDPOINT :", () => {
     })
     it("4) UPDATE Current User", (done) => {
       const updateUser = {
-        name: "newlucastestmocha",
-        mail: "newlucastestmocha@gmail.com",
+        name: "newlucastestci",
+        mail: "newlucastestci@gmail.com",
         picture: "new picture",
         password: "newpassword",
       }
