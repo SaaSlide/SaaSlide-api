@@ -31,5 +31,8 @@ jobs:
       - name: Install Dependencies
         run: yarn install
 
-      - name: Test Lint
+      - name: Run Test
+        run: yarn run test
+
+      - name: Run Lint
         run: yarn run eslint
