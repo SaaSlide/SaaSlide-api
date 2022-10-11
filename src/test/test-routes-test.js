@@ -23,7 +23,6 @@ global.testToken
 describe("/ENDPOINT :", () => {
   let token
   describe("/AUTHENTIFICATION :", () => {
-    this.timeout(5000)
     // it("1) POST Register", (done) => {
     //   const account = {
     //     mail: "lucastestci@mail.com",
@@ -55,7 +54,7 @@ describe("/ENDPOINT :", () => {
           console.log(err)
           done()
         })
-    })
+    }).timeout(5000)
     // it("3) GET Current User", (done) => {
     //   chai
     //     .request(app)
