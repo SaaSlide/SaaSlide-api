@@ -21,6 +21,9 @@ spec:
           - configMapRef: # permet d'ajouter des configmap dans notre deployment
               name: uridb
         image: lucasmoreno82/saaslide-api:latest # Quel image est utilisé
+        volumeMounts: # l'endroit où les fichiers vont être stockés
+        - mountPath: /usr/src/app/public/pdfToPng
+          name: data
         readinessProbe: 
           httpGet:
             path: /
@@ -35,6 +38,13 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 1
           periodSeconds: 15
-        imagePullPolicy: Always
+        imagePullPolicy: Always # 
         ports:
         - containerPort: 4000 # Quel port local est utilisé
+      volumes:
+        - name: data
+          persistentVolumeClaim: 
+            claimName: volume-pdf
+
+
+        
