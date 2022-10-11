@@ -21,6 +21,8 @@ jobs:
       GH_ACCESS_TOKEN: ${{ secrets.GITHUB_SECRET }}
       FRONT_URL: http://localhost:3000
       URI_DB: ${{ secrets.URI_DB }}
+      NAME_DB: ${{ secrets.NAME_DB }}
+      PASSWORD_DB: ${{ secrets.PASSWORD_DB }}
 
     steps:
 
