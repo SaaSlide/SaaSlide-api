@@ -53,9 +53,9 @@ jobs:
       - name: Run sonarqube
         run: sonar-scanner
             -Dsonar.organization=1corp 
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-            -Dsonar.sources=$GITHUB_WORKSPACE
-            -Dsonar.host.url=http://localhost:9000 \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.sources=$GITHUB_WORKSPACE 
+            -Dsonar.host.url=http://localhost:9000
             -Dsonar.login=${{ secrets.SONAR_LOGIN }}
 
       - name: Log in to the Container registry
