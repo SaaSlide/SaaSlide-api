@@ -1,0 +1,34 @@
+name: CI
+on:
+  push:
+
+  pull_request:
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    env:
+      SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
+      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
+
+    steps:
+
+      - uses: actions/checkout@v3
+
+      - name: Setup sonarqube
+        uses: warchant/setup-sonar-scanner@v3
+        
+      # ---------- Run sonar when hosted and not in localhost
+
+      # - name: Run sonarqube
+      #   run: sonar-scanner
+      #       -Dsonar.projectKey=${{ github.repository }}
+      #       -Dsonar.sources=$GITHUB_WORKSPACE
+      #       -Dsonar.host.url=http://localhost:9000 # pas accessible depuis github action (localhost -> hebergement)
+      #       -Dsonar.login=${{ secrets.SONAR_LOGIN }}

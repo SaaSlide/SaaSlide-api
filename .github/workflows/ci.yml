@@ -28,8 +28,6 @@ jobs:
       PASSWORD_DB: ${{ secrets.PASSWORD_DB }}
       REGISTRY: ghcr.io
       IMAGE_NAME: ${{ github.repository }}
-      SONAR_LOGIN: ${{ secrets.SONAR_LOGIN }}
-      SONAR_PROJECT_KEY: ${{ secrets.SONAR_PROJECT_KEY }}
 
     steps:
 
@@ -47,16 +45,6 @@ jobs:
 
       - name: Run Lint
         run: yarn run eslint
-
-      - name: Setup sonarqube
-        uses: warchant/setup-sonar-scanner@v3
-      - name: Run sonarqube
-        run: sonar-scanner
-            -Dsonar.organization=1corp 
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.sources=$GITHUB_WORKSPACE 
-            -Dsonar.host.url=http://localhost:9000
-            -Dsonar.login=${{ secrets.SONAR_LOGIN }}
 
       - name: Log in to the Container registry
         if: github.event_name != 'pull_request'
